@@ -5,7 +5,9 @@ import es.logixs.domain.CounterOffers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
@@ -80,6 +82,29 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public List<CounterOffers> findAll() {
-        return null;
+        List<CounterOffers> counterOffersList = new ArrayList<>();
+        String query = "select * from CounterOffers";
+
+        try (
+            Connection connection = DataBaseHelper.getConexion("mySQL");
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery()
+        ) {
+            while (result.next()) {
+                counterOffersList.add(new CounterOffers(
+                    result.getInt("id"),
+                    result.getString("name"),
+                    result.getString("vom"),
+                    result.getDouble("originalPrice"),
+                    result.getDouble("counterOfferPrice"),
+                    result.getDouble("quantity"))
+                );
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        return counterOffersList;
     }
 }
