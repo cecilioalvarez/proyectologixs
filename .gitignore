@@ -19,4 +19,5 @@
 *.tar.gz
 *.rar
 .vscode/
+.idea/
 app1/target/
