@@ -35,7 +35,25 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public CounterOffers update(CounterOffers counterOffer) {
-        return null;
+        String query="update CounterOffers set name=? ,vom=? ,originalPrice=? ,counterOfferPrice=? ,quantity=? where id=?";
+
+        try (
+            Connection connection = DataBaseHelper.getConexion("mySQL");
+            PreparedStatement statement = connection.prepareStatement(query)
+        ) {
+            statement.setString(1, counterOffer.getName());
+            statement.setString(2, counterOffer.getVom());
+            statement.setDouble(3, counterOffer.getOriginalPrice());
+            statement.setDouble(4, counterOffer.getCounterOfferPrice());
+            statement.setDouble(5, counterOffer.getQuantity());
+            statement.setInt(6, counterOffer.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        return counterOffer;
     }
 
     @Override
