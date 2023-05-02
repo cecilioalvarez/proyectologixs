@@ -88,4 +88,28 @@ public class Products {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public String getOriginCountryIso() {
+        return originCountryIso;
+    }
+
+    public void setOriginCountryIso(String originCountryIso) {
+        this.originCountryIso = originCountryIso;
+    }
+
+    public String getQuality() {
+        return quality;
+    }
+
+    public void setQuality(String quality) {
+        this.quality = quality;
+    }
+
+    public String getDescAndSpecs() {
+        return descAndSpecs;
+    }
+
+    public void setDescAndSpecs(String descAndSpecs) {
+        this.descAndSpecs = descAndSpecs;
+    }
 }
