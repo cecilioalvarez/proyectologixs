@@ -8,23 +8,30 @@ public class Products {
     private String scientificName;
     private String name;
     private String category;
+    private String originCountryIso;
+    private String quality;
+    private String descAndSpecs;
 
     public Products() {
 
     }
 
-    public Products(String id) {
-        this.id = id;
-    }
-
-    public Products(String userId, String code, String companyId, String scientificName, String name, String category) {
+    public Products(String userId, String code, String companyId, String scientificName, String name, String category, String originCountryIso, String quality, String descAndSpecs) {
         this.userId = userId;
         this.code = code;
         this.companyId = companyId;
         this.scientificName = scientificName;
         this.name = name;
         this.category = category;
+        this.originCountryIso = originCountryIso;
+        this.quality = quality;
+        this.descAndSpecs = descAndSpecs;
     }
+
+    public Products(String id) {
+        this.id = id;
+    }
+
 
     public String getId() {
         return id;

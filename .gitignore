@@ -20,4 +20,5 @@
 *.rar
 .vscode/
 app1/target/
-.idea/
+.idea/*
+*.iml
