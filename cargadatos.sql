@@ -1,0 +1,1 @@
+insert into ordenador (numero,modelo,precio) values (5,"m1",200);

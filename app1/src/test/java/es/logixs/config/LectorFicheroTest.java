@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class LectorFicheroTest {
     @Test
     void testLeerLineas() throws IOException {
-
+       System.out.println("carpeta:" +System.getProperty("user.dir"));
         LectorFichero lector= new LectorFichero("cargaDatos.sql");
         int lineas= lector.leerLineas().size();
         assertEquals(1,lineas);
