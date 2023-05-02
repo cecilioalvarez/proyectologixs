@@ -74,10 +74,33 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
         }
     }
 
-
     @Override
     public CounterOffers findOne(int id) {
-        return null;
+        CounterOffers counterOffer = new CounterOffers();
+        String sql = "select * from CounterOffers where id = ?";
+
+        try (
+            Connection connection = DataBaseHelper.getConexion("mySQL");
+            PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                counterOffer = new CounterOffers(
+                    result.getInt("id"),
+                    result.getString("name"),
+                    result.getString("vom"),
+                    result.getDouble("originalPrice"),
+                    result.getDouble("counterOfferPrice"),
+                    result.getDouble("quantity")
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        return counterOffer;
     }
 
     @Override
