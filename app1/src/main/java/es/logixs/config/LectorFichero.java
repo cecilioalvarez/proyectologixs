@@ -1,10 +1,16 @@
 package es.logixs.config;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LectorFichero {
@@ -25,8 +31,24 @@ public class LectorFichero {
     // es un lector generico
     public List<String> leerLineas() throws IOException {
 
-        Path path = Paths.get(fichero);
-        return Files.readAllLines(path, StandardCharsets.UTF_8);
+        List<String> lineas= new ArrayList<String>();
+      
+      
+        InputStream is =getClass().getClassLoader().getResourceAsStream("cargadatos.sql");
+        BufferedInputStream bis= new BufferedInputStream(is);
+        BufferedReader reader = new BufferedReader(
+        new InputStreamReader(bis, StandardCharsets.UTF_8));
+        
+        String linea= reader.readLine();
+     
+        while (linea != null) {
+
+            linea=reader.readLine();
+            lineas.add(linea);
+            
+        }
+       
+        return lineas;
       
     }
 }
