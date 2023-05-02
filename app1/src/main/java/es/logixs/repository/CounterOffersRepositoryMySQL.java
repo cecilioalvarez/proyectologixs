@@ -35,7 +35,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public CounterOffers update(CounterOffers counterOffer) {
-        String query="update CounterOffers set name=? ,vom=? ,originalPrice=? ,counterOfferPrice=? ,quantity=? where id=?";
+        String query = "update CounterOffers set name=? ,vom=? ,originalPrice=? ,counterOfferPrice=? ,quantity=? where id=?";
 
         try (
             Connection connection = DataBaseHelper.getConexion("mySQL");
@@ -58,7 +58,18 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public void delete(CounterOffers counterOffer) {
+        String query = "delete from CounterOffers where id = ?";
 
+        try (
+            Connection connection = DataBaseHelper.getConexion("mySQL");
+            PreparedStatement statement = connection.prepareStatement(query)
+        ) {
+            statement.setInt(1, counterOffer.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
 
