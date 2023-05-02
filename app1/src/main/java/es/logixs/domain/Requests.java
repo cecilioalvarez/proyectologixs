@@ -5,14 +5,14 @@ public class Requests {
     private String code;
     private String offerId;
     private String ownerId;
-    private String companyID;
+    private String companyId;
 
 
     public Requests(String code, String offerId, String ownerId, String companyID) {
         this.code = code;
         this.offerId = offerId;
         this.ownerId = ownerId;
-        this.companyID = companyID;
+        this.companyId = companyId;
     }
 
     public Requests(String id) {
@@ -54,11 +54,11 @@ public class Requests {
         this.ownerId = ownerId;
     }
 
-    public String getCompanyID() {
-        return companyID;
+    public String getCompanyId() {
+        return companyId;
     }
 
-    public void setCompanyID(String companyID) {
-        this.companyID = companyID;
+    public void setCompanyId(String companyID) {
+        this.companyId = companyID;
     }
 }
