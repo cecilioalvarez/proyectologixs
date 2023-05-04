@@ -14,7 +14,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public CounterOffers insert(CounterOffers counterOffer) {
-        String query = "insert into CounterOffers (id,name,vom,originalPrice,counterOfferPrice,quantity) values(?,?,?,?,?,?)";
+        String query = "insert into counter_offers (id,name,vom,originalPrice,counterOfferPrice,quantity) values(?,?,?,?,?,?)";
 
         try (
             Connection connection = DataBaseHelper.getConexion("mySQL");
@@ -37,7 +37,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public CounterOffers update(CounterOffers counterOffer) {
-        String query = "update CounterOffers set name=? ,vom=? ,originalPrice=? ,counterOfferPrice=? ,quantity=? where id=?";
+        String query = "update counter_offers set name=? ,vom=? ,originalPrice=? ,counterOfferPrice=? ,quantity=? where id=?";
 
         try (
             Connection connection = DataBaseHelper.getConexion("mySQL");
@@ -60,7 +60,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public void delete(CounterOffers counterOffer) {
-        String query = "delete from CounterOffers where id = ?";
+        String query = "delete from counter_offers where id = ?";
 
         try (
             Connection connection = DataBaseHelper.getConexion("mySQL");
@@ -77,7 +77,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
     @Override
     public CounterOffers findOne(int id) {
         CounterOffers counterOffer = new CounterOffers();
-        String sql = "select * from CounterOffers where id = ?";
+        String sql = "select * from counter_offers where id = ?";
 
         try (
             Connection connection = DataBaseHelper.getConexion("mySQL");
@@ -106,7 +106,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
     @Override
     public List<CounterOffers> findAll() {
         List<CounterOffers> counterOffersList = new ArrayList<>();
-        String query = "select * from CounterOffers";
+        String query = "select * from counter_offers";
 
         try (
             Connection connection = DataBaseHelper.getConexion("mySQL");
