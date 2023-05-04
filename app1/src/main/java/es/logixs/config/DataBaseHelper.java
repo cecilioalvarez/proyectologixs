@@ -1,12 +1,9 @@
 package es.logixs.config;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DataBaseHelper {
-    
+
 
     public static Connection getConexion(String tipoBaseDatos) throws SQLException {
 
@@ -22,12 +19,12 @@ public class DataBaseHelper {
 
     public void executarConsulta(String sql) {
 
-       
-               
+
+
 
         try (Connection conexion =getConexion("mySQL");
-                Statement sentencia = conexion.createStatement();) {
-            sentencia.executeUpdate(sql);
+             PreparedStatement sentencia = conexion.prepareStatement(sql);) {
+            sentencia.executeUpdate();
         } catch (SQLException e) {
             System.out.println("ha ocurrido un error");
             System.out.println(e.getMessage());
