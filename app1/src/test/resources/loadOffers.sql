@@ -1,3 +1,4 @@
+
 DROP TABLE offer;
 create table offer(id int not null,code varchar(255) not null,name varchar(255),description varchar(255),category varchar(255),primary key (id));
 insert into offer(id,code,name,description,category) values(1,'code1','name1','description1','category1');
