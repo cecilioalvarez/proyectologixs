@@ -4,7 +4,7 @@ import es.logixs.domain.Requests;
 
 import java.util.List;
 
-public interface RequestsRepository {
+public interface RequestsRepository1 {
 
     Requests insert(Requests requests);
     Requests findOne(String id);
