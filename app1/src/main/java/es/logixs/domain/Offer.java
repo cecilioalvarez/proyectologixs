@@ -2,7 +2,7 @@ package es.logixs.domain;
 
 import java.util.Objects;
 
-public class Offers {
+public class Offer {
 
     private int id;
     private String code;
@@ -16,7 +16,7 @@ public class Offers {
 //
 //        private int companyId;
 
-    public Offers(int id, String code, String name, String description, String category) {
+    public Offer(int id, String code, String name, String description, String category) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -24,14 +24,14 @@ public class Offers {
         this.category = category;
     }
 
-    public Offers(int id) {
+    public Offer(int id) {
         this.id = id;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Offers offers)) return false;
+        if (!(o instanceof Offer offers)) return false;
         return id == offers.id && Objects.equals(code, offers.code);
     }
 
