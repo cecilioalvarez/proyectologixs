@@ -2,8 +2,6 @@ package es.logixs.repository;
 
 import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.Products;
-import es.logixs.domain.Requests;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +17,7 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
 
     @Override
     public Products insert(Products product) {
-        try (Connection connection = DataBaseHelper.getConexion("mySQL");
+        try (Connection connection =new DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlInsert);) {
             sentence.setString(1, product.getId());
             sentence.setString(2, product.getUserId());
@@ -43,7 +41,7 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
     @Override
     public Products findOne(String id) {
         Products product = null;
-        try (Connection connection = DataBaseHelper.getConexion("mySQL");
+        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlFindOne);) {
             sentence.setString(1, id);
             ResultSet result = sentence.executeQuery();
@@ -71,7 +69,7 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
     public List<Products> findAll() {
         List<Products> products = new ArrayList<>();
 
-        try (Connection connection = DataBaseHelper.getConexion("mySQL");
+        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlFindAll);) {
             ResultSet result = sentence.executeQuery();
             while (result.next()) {
@@ -98,7 +96,7 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
 
     @Override
     public void delete(String id) {
-        try (Connection connection = DataBaseHelper.getConexion("mySQL");
+        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlDelete);) {
             sentence.setString(1, id);
             sentence.executeUpdate();

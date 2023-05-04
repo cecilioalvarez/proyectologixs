@@ -21,7 +21,7 @@ public class CompaniesRepositoryMySQL {
 
     public Companies insert(Companies company) {
 
-        try (Connection conexion = DataBaseHelper.getConexion("mySQL");
+        try (Connection conexion = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentencia = conexion.prepareStatement(sqlInsert);) {
             sentencia.setString(1, company.getObjectid());
             sentencia.setString(2, company.getCode());
@@ -39,7 +39,7 @@ public class CompaniesRepositoryMySQL {
 
     public void delete(Companies company) {
 
-        try (Connection conexion = DataBaseHelper.getConexion("mySQL");
+        try (Connection conexion = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentencia = conexion.prepareStatement(sqlDelete);) {
             sentencia.setString(1, company.getObjectid());
             sentencia.executeUpdate();
@@ -54,7 +54,7 @@ public class CompaniesRepositoryMySQL {
 
         List<Companies> lista = new ArrayList<Companies>();
 
-        try (Connection conn = DataBaseHelper.getConexion("mySQL");
+        try (Connection conn = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement stmt = conn.prepareStatement(sqlFindAll);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -75,7 +75,7 @@ public class CompaniesRepositoryMySQL {
 
         Companies company = null;
 
-        try (Connection conn = DataBaseHelper.getConexion("mySQL");
+        try (Connection conn = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement stmt = conn.prepareStatement(sqlFindOne);
 
         ) {

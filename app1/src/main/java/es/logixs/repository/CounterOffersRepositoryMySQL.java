@@ -17,7 +17,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
         String query = "insert into counter_offers (id,name,vom,originalPrice,counterOfferPrice,quantity) values(?,?,?,?,?,?)";
 
         try (
-            Connection connection = DataBaseHelper.getConexion("mySQL");
+            Connection connection = new  DataBaseHelper().getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(query)
         ) {
             statement.setInt(1, counterOffer.getId());
@@ -40,7 +40,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
         String query = "update counter_offers set name=? ,vom=? ,originalPrice=? ,counterOfferPrice=? ,quantity=? where id=?";
 
         try (
-            Connection connection = DataBaseHelper.getConexion("mySQL");
+            Connection connection = new  DataBaseHelper().getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(query)
         ) {
             statement.setString(1, counterOffer.getName());
@@ -63,7 +63,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
         String query = "delete from counter_offers where id = ?";
 
         try (
-            Connection connection = DataBaseHelper.getConexion("mySQL");
+            Connection connection = new  DataBaseHelper().getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(query)
         ) {
             statement.setInt(1, counterOffer.getId());
@@ -80,7 +80,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
         String sql = "select * from counter_offers where id = ?";
 
         try (
-            Connection connection = DataBaseHelper.getConexion("mySQL");
+            Connection connection = new  DataBaseHelper().getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(sql)
         ) {
             statement.setInt(1, id);
@@ -109,7 +109,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
         String query = "select * from counter_offers";
 
         try (
-            Connection connection = DataBaseHelper.getConexion("mySQL");
+            Connection connection = new  DataBaseHelper().getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet result = statement.executeQuery()
         ) {

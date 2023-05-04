@@ -32,7 +32,7 @@ public class SalesRepositoryMySQL implements SalesRepository {
 
     public void delete(Sales sales) {
 
-        try (Connection conexion = DataBaseHelper.getConexion("mySQL");
+        try (Connection conexion = new  DataBaseHelper().getConexion("mySQL");
 
                 PreparedStatement sentencia = conexion.prepareStatement(sqlDelete);) {
 
@@ -56,7 +56,7 @@ public class SalesRepositoryMySQL implements SalesRepository {
 
         List<Sales> list = new ArrayList<Sales>();
 
-        try (Connection conn = DataBaseHelper.getConexion("mySQL");
+        try (Connection conn = new  DataBaseHelper().getConexion("mySQL");
 
                 PreparedStatement stmt = conn.prepareStatement(sqlFindAll);
 
@@ -89,7 +89,7 @@ public class SalesRepositoryMySQL implements SalesRepository {
 
         Sales sales = null;
 
-        try (Connection conn = DataBaseHelper.getConexion("mySQL");
+        try (Connection conn = new  DataBaseHelper().getConexion("mySQL");
 
                 PreparedStatement stmt = conn.prepareStatement(sqlFindOne);) {
 
@@ -122,7 +122,7 @@ public class SalesRepositoryMySQL implements SalesRepository {
 
     public Sales insert(Sales sales) {
 
-        try (Connection conexion = DataBaseHelper.getConexion("mySQL");
+        try (Connection conexion = new  DataBaseHelper().getConexion("mySQL");
 
                 PreparedStatement sentencia = conexion.prepareStatement(sqlInsert);) {
 
@@ -158,7 +158,7 @@ public class SalesRepositoryMySQL implements SalesRepository {
 
     public Sales update(Sales sales) {
 
-        try (Connection conexion = DataBaseHelper.getConexion("mySQL");
+        try (Connection conexion = new  DataBaseHelper().getConexion("mySQL");
 
                 PreparedStatement sentencia = conexion.prepareStatement(sqlUpdate);) {
 

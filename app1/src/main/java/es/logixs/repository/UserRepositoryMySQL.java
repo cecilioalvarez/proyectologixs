@@ -16,7 +16,7 @@ public class UserRepositoryMySQL implements UserRepository{
     public User insert(User user) {
         String sql = "insert into user (objectid,name,lastName,email) values (?,?,?,?)";
 
-        try (Connection connection = DataBaseHelper.getConexion("mySQL");
+        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement query = connection.prepareStatement(sql)) {
             query.setString(1, user.getObjectid());
             query.setString(2, user.getName());
@@ -35,7 +35,7 @@ public class UserRepositoryMySQL implements UserRepository{
     public void delete(User user) {
         String sql = "delete from user where objectid=?";
 
-        try (Connection connection = DataBaseHelper.getConexion("mySQL");
+        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement query = connection.prepareStatement(sql)) {
             query.setString(1, user.getObjectid());
             query.executeUpdate();
@@ -49,7 +49,7 @@ public class UserRepositoryMySQL implements UserRepository{
     public User findOne(String objectid) {
         User user = null;
 
-        try (Connection conn = DataBaseHelper.getConexion("mySQL");
+        try (Connection conn = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement stmt = conn.prepareStatement("select * from user where objectid=?")) {
             stmt.setString(1, objectid);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -71,7 +71,7 @@ public class UserRepositoryMySQL implements UserRepository{
     public List<User> findAll() {
         List<User> list = new ArrayList<>();
 
-        try (Connection conn = DataBaseHelper.getConexion("mySQL");
+        try (Connection conn = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement stmt = conn.prepareStatement("select * from user");
              ResultSet rs = stmt.executeQuery()) {
 

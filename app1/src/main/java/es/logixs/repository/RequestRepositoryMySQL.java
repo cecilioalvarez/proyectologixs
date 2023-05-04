@@ -15,7 +15,7 @@ public class RequestRepositoryMySQL implements RequestsRepository {
 
     @Override
     public Requests insert(Requests requests) {
-        try (Connection connection = DataBaseHelper.getConexion("mySQL");
+        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlInsert);) {
             sentence.setString(1, requests.getCode());
             sentence.setString(2, requests.getOfferId());
@@ -33,7 +33,7 @@ public class RequestRepositoryMySQL implements RequestsRepository {
     @Override
     public Requests findOne(String id) {
         Requests requests = null;
-        try (Connection connection = DataBaseHelper.getConexion("mySQL");
+        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlFindOne);) {
             sentence.setString(1, id);
             ResultSet result = sentence.executeQuery();
@@ -54,7 +54,7 @@ public class RequestRepositoryMySQL implements RequestsRepository {
     @Override
     public List<Requests> findAll() {
         List<Requests> requests = new ArrayList<>();
-        try (Connection connection = DataBaseHelper.getConexion("mySQL");
+        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlFindAll);) {
             ResultSet result = sentence.executeQuery();
             while (result.next()) {
@@ -75,7 +75,7 @@ public class RequestRepositoryMySQL implements RequestsRepository {
 
     @Override
     public void delete(String id) {
-        try (Connection connection = DataBaseHelper.getConexion("mySQL");
+        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlDelete);) {
             sentence.setString(1, id);
             sentence.executeUpdate();
