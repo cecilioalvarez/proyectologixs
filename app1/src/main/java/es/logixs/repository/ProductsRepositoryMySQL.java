@@ -12,24 +12,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductsRepositoryMySQL implements ProductsRepository {
-    private final static String sqlInsert = "insert into Products (userId, code, companyId, scientificName, name, category, originCountryIso, quality, descAndSpecs) values (?,?,?,?,?,?,?,?,?);";
-    private final static String sqlDelete = "delete from Products where id=?";
-    private final static String sqlFindAll = "select * from Products;";
-    private final static String sqlFindOne = "select * from Products  where id=?;";
+    private final static String sqlInsert = "insert into products (id, userId, code, companyId, scientificName, name, category, originCountryIso, quality, descAndSpecs) values (?,?,?,?,?,?,?,?,?,?);";
+    private final static String sqlDelete = "delete from products where id=?";
+    private final static String sqlFindAll = "select * from products;";
+    private final static String sqlFindOne = "select * from products  where id=?;";
 
     @Override
     public Products insert(Products product) {
         try (Connection connection = DataBaseHelper.getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlInsert);) {
-            sentence.setString(1, product.getUserId());
-            sentence.setString(2, product.getCode());
-            sentence.setString(3, product.getCompanyId());
-            sentence.setString(4, product.getScientificName());
-            sentence.setString(5, product.getName());
-            sentence.setString(6, product.getCategory());
-            sentence.setString(7, product.getOriginCountryIso());
-            sentence.setString(8, product.getQuality());
-            sentence.setString(9, product.getDescAndSpecs());
+            sentence.setString(1, product.getId());
+            sentence.setString(2, product.getUserId());
+            sentence.setString(3, product.getCode());
+            sentence.setString(4, product.getCompanyId());
+            sentence.setString(5, product.getScientificName());
+            sentence.setString(6, product.getName());
+            sentence.setString(7, product.getCategory());
+            sentence.setString(8, product.getOriginCountryIso());
+            sentence.setString(9, product.getQuality());
+            sentence.setString(10, product.getDescAndSpecs());
             sentence.executeUpdate();
         } catch (SQLException e) {
 
