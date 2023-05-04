@@ -30,7 +30,7 @@ public class CounterOffersRepositoryTest {
     }
 
     @Test
-    void should_do_insert() {
+    void should_insert() {
         CounterOffers counterOffers = new CounterOffers(
             5,
             "name5",
@@ -46,7 +46,7 @@ public class CounterOffersRepositoryTest {
     }
 
     @Test
-    void should_do_update() {
+    void should_update() {
         CounterOffers counterOffers = new CounterOffers(
             5,
             "name5",
@@ -62,7 +62,7 @@ public class CounterOffersRepositoryTest {
     }
 
     @Test
-    void  should_do_delete(){
+    void  should_delete(){
         CounterOffers counterOffers = new CounterOffers(
             5,
             "name5",
