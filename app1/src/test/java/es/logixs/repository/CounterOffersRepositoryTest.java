@@ -62,7 +62,7 @@ public class CounterOffersRepositoryTest {
     }
 
     @Test
-    void  should_delete(){
+    void should_delete() {
         CounterOffers counterOffers = new CounterOffers(
             5,
             "name5",
@@ -79,9 +79,9 @@ public class CounterOffersRepositoryTest {
     }
 
     @Test
-    void  should_findOne(){
+    void should_findOne() {
         CounterOffers counterOffersFound = counterOffersRepository.findOne(4);
 
-        assertEquals("name4",counterOffersFound.getName());
+        assertEquals("name4", counterOffersFound.getName());
     }
 }

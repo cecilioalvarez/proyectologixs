@@ -81,7 +81,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
         try (
             Connection connection = DataBaseHelper.getConexion("mySQL");
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql)
         ) {
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
