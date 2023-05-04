@@ -11,7 +11,7 @@ public class DataBaseHelper {
     public static Connection getConexion(String tipoBaseDatos) throws SQLException {
 
         if (tipoBaseDatos.equals("mySQL")) {
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/logixs", "root", " ");
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/logixs", "root", "");
 
         } else {
 
