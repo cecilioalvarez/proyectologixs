@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class CounterOffersRepositoryTest {
     private static CounterOffersRepository counterOffersRepository;
@@ -58,5 +59,22 @@ public class CounterOffersRepositoryTest {
         CounterOffers counterOffersUpdated = counterOffersRepository.update(counterOffers);
 
         assertEquals(counterOffers, counterOffersUpdated);
+    }
+
+    @Test
+    void  should_do_delete(){
+        CounterOffers counterOffers = new CounterOffers(
+            5,
+            "name5",
+            "vom5",
+            2.0,
+            4.0,
+            5
+        );
+
+        counterOffersRepository.delete(counterOffers);
+        CounterOffers counterOffersDeleted = counterOffersRepository.findOne(5);
+
+        assertNull(counterOffersDeleted);
     }
 }

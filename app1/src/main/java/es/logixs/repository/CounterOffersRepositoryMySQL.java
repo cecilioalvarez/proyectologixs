@@ -76,7 +76,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public CounterOffers findOne(int id) {
-        CounterOffers counterOffer = new CounterOffers();
+        CounterOffers counterOffer = null;
         String sql = "select * from counter_offers where id = ?";
 
         try (
