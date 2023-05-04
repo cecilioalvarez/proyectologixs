@@ -10,7 +10,7 @@ public class LectorFicheroTest {
     @Test
     void testLeerLineas() throws IOException {
        System.out.println("carpeta:" +System.getProperty("user.dir"));
-        LectorFichero lector= new LectorFichero("../cargaDatos.sql");
+        LectorFichero lector= new LectorFichero("cargadatos.sql");
         int lineas= lector.leerLineas().size();
         assertEquals(1,lineas);
     }
