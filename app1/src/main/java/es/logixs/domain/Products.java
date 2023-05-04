@@ -32,6 +32,18 @@ public class Products {
         this.id = id;
     }
 
+    public Products(String id, String userId, String code, String companyId, String scientificName, String name, String category, String originCountryIso, String quality, String descAndSpecs) {
+        this.id = id;
+        this.userId = userId;
+        this.code = code;
+        this.companyId = companyId;
+        this.scientificName = scientificName;
+        this.name = name;
+        this.category = category;
+        this.originCountryIso = originCountryIso;
+        this.quality = quality;
+        this.descAndSpecs = descAndSpecs;
+    }
 
     public String getId() {
         return id;
