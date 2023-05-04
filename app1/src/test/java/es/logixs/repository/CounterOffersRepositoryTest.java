@@ -26,4 +26,19 @@ public class CounterOffersRepositoryTest {
 
         assertEquals(counterOffers, counterOffersInserted);
     }
+
+    @Test
+    void should_do_update() throws IOException {
+        CounterOffersRepository counterOffersRepository = new CounterOffersRepositoryMySQL();
+        LectorFichero lector = new LectorFichero("cargadatos_counter_offers.sql");
+        DataBaseHelper dataBaseHelper = new DataBaseHelper();
+        CargadorConsultasSQL cargador = new CargadorConsultasSQL(lector, dataBaseHelper);
+        cargador.cargarFichero();
+
+        CounterOffers counterOffers= new CounterOffers(5, "name5", "vom5",2.0,4.0,5);
+
+        CounterOffers counterOffersUpdated = counterOffersRepository.update(counterOffers);
+
+        assertEquals(counterOffers, counterOffersUpdated);
+    }
 }
