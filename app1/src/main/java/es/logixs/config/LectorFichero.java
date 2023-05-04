@@ -1,15 +1,7 @@
 package es.logixs.config;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,25 +22,22 @@ public class LectorFichero {
     }
     // es un lector generico
     public List<String> leerLineas() throws IOException {
+        List<String> lineas = new ArrayList<String>();
 
-        List<String> lineas= new ArrayList<String>();
+        InputStream is = getClass().getClassLoader().getResourceAsStream(fichero);
+        BufferedInputStream bis = new BufferedInputStream(is);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(bis, StandardCharsets.UTF_8));
 
-
-        InputStream is =getClass().getClassLoader().getResourceAsStream(fichero);
-        BufferedInputStream bis= new BufferedInputStream(is);
-        BufferedReader reader = new BufferedReader(
-        new InputStreamReader(bis, StandardCharsets.UTF_8));
-
-        String linea= reader.readLine();
+        String linea = reader.readLine(); // leer la primera línea
 
         while (linea != null) {
-
-            linea=reader.readLine();
-            lineas.add(linea);
-
+            if (!linea.isEmpty()) { // verificar si la línea no está vacía
+                lineas.add(linea);
+            }
+            linea = reader.readLine();
         }
 
         return lineas;
-
     }
+
 }
