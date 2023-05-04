@@ -68,4 +68,41 @@ class OffersServiceTest {
         assertEquals(counterOffer, insertedCounterOffer);
     }
 
+    @Test
+    public void insertOfferTest() {
+        Offer offer = mock(Offer.class);
+        when(offerRepository.insert(offer)).thenReturn(offer);
+
+        Offer insertedOffer = offersService.insertOffer(offer);
+
+        verify(offerRepository, times(1)).insert(offer);
+        assertEquals(offer, insertedOffer);
+    }
+
+    @Test
+    public void findOneCounterOffer() {
+        int id = 2;
+
+        CounterOffers counterOffer = mock(CounterOffers.class);
+
+        when(counterOffersRepository.findOne(id)).thenReturn(counterOffer);
+        CounterOffers counterOfferResult = offersService.findOneCounterOffer(id);
+
+        verify(counterOffersRepository, times(1)).findOne(id);
+        assertEquals(counterOffer, counterOfferResult);
+    }
+
+    @Test
+    public void findOneOffer() {
+        int id = 2;
+
+        Offer offer = mock(Offer.class);
+
+        when(offerRepository.findOne(id)).thenReturn(offer);
+        Offer offerResult = offersService.findOneOffer(id);
+
+        verify(offerRepository, times(1)).findOne(id);
+        assertEquals(offer, offerResult);
+    }
+
 }
