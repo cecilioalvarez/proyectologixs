@@ -17,7 +17,7 @@ public class OfferRepositoryMySQL implements OfferRepository{
         String sql = "insert into offer (id,code,name,description,category) values (?,?,?,?,?)";
 
         try (Connection connection = DataBaseHelper.getConexion("mySQL");
-             PreparedStatement query = connection.prepareStatement(sql);) {
+             PreparedStatement query = connection.prepareStatement(sql)) {
             query.setInt(1, offer.getId());
             query.setString(2, offer.getCode());
             query.setString(3, offer.getName());
@@ -37,7 +37,7 @@ public class OfferRepositoryMySQL implements OfferRepository{
         String sql = "delete from Offer where id=?";
 
         try (Connection connection = DataBaseHelper.getConexion("mySQL");
-             PreparedStatement query = connection.prepareStatement(sql);) {
+             PreparedStatement query = connection.prepareStatement(sql)) {
             query.setInt(1, offer.getId());
             query.executeUpdate();
         } catch (SQLException e) {
@@ -51,9 +51,7 @@ public class OfferRepositoryMySQL implements OfferRepository{
         Offer offer = null;
 
         try (Connection conn = DataBaseHelper.getConexion("mySQL");
-             PreparedStatement stmt = conn.prepareStatement("select * from Offer where id=?");
-
-        ) {
+             PreparedStatement stmt = conn.prepareStatement("select * from Offer where id=?")) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next())
@@ -72,7 +70,7 @@ public class OfferRepositoryMySQL implements OfferRepository{
 
     @Override
     public List<Offer> findAll() {
-        List<Offer> list = new ArrayList<Offer>();
+        List<Offer> list = new ArrayList<>();
 
         try (Connection conn = DataBaseHelper.getConexion("mySQL");
              PreparedStatement stmt = conn.prepareStatement("select * from Offer");
