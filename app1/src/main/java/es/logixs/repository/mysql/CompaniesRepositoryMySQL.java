@@ -1,4 +1,4 @@
-package es.logixs.repository;
+package es.logixs.repository.mysql;
 
 import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.Companies;

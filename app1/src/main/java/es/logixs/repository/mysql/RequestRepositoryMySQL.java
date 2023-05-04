@@ -1,7 +1,8 @@
-package es.logixs.repository;
+package es.logixs.repository.mysql;
 
 import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.Requests;
+import es.logixs.repository.RequestsRepository;
 
 import java.sql.*;
 import java.util.ArrayList;

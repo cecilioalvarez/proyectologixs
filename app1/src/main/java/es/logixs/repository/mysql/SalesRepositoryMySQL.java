@@ -1,4 +1,4 @@
-package es.logixs.repository;
+package es.logixs.repository.mysql;
 
 import java.sql.Connection;
 
@@ -15,6 +15,7 @@ import java.util.List;
 import es.logixs.config.DataBaseHelper;
 
 import es.logixs.domain.Sales;
+import es.logixs.repository.SalesRepository;
 
 public class SalesRepositoryMySQL implements SalesRepository {
 

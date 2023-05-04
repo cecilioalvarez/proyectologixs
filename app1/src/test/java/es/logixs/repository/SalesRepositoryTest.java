@@ -15,6 +15,7 @@ import es.logixs.config.CargadorConsultasSQL;
 import es.logixs.config.DataBaseHelper;
 import es.logixs.config.LectorFichero;
 import es.logixs.domain.Sales;
+import es.logixs.repository.mysql.SalesRepositoryMySQL;
 
 public class SalesRepositoryTest {
 

@@ -1,7 +1,8 @@
-package es.logixs.repository;
+package es.logixs.repository.mysql;
 
 import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.CounterOffers;
+import es.logixs.repository.CounterOffersRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

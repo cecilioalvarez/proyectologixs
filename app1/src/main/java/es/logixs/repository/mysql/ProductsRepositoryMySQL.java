@@ -1,7 +1,9 @@
-package es.logixs.repository;
+package es.logixs.repository.mysql;
 
 import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.Products;
+import es.logixs.repository.ProductsRepository;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
