@@ -18,15 +18,15 @@ import es.logixs.domain.Sales;
 
 public class SalesRepositoryMySQL implements SalesRepository {
 
-    private final static String sqlUpdate = "update  Sales set ownerId=?, clientId=?, code=?, offerId=?, counterOfferId=?, isCounterOffer=? where id=?";
+    private final static String sqlUpdate = "update  sales set ownerId=?, clientId=?, code=?, offerId=?, counterOfferId=?, isCounterOffer=? where id=?";
 
-    private final static String sqlInsert = "insert into Sales (id,ownerId,clientId,code,offerId,counterOfferId,isCounterOffer) values (?,?,?,?,?,?,?)";
+    private final static String sqlInsert = "insert into sales (id,ownerId,clientId,code,offerId,counterOfferId,isCounterOffer) values (?,?,?,?,?,?,?)";
 
-    private final static String sqlDelete = "delete from Sales where id=?";
+    private final static String sqlDelete = "delete from sales where id=?";
 
-    private final static String sqlFindAll = "select * from Sales";
+    private final static String sqlFindAll = "select * from sales";
 
-    private final static String sqlFindOne = "select * from Sales where id=?";
+    private final static String sqlFindOne = "select * from sales where id=?";
 
     @Override
 

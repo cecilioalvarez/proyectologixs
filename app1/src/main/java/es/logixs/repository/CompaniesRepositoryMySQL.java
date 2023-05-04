@@ -12,10 +12,10 @@ import java.util.List;
 
 public class CompaniesRepositoryMySQL {
 
-    private final static String sqlInsert = "insert into Companies (objectid,code,licenseId,name,taxId) values (?,?,?,?,?)";
-    private final static String sqlFindAll = "select * from Companies";
-    private final static String sqlDelete = "delete from Companies where objectid=?";
-    private final static String sqlFindOne= "select * from Companies where objectid=?";
+    private final static String sqlInsert = "insert into companies (objectid,code,licenseId,name,taxId) values (?,?,?,?,?)";
+    private final static String sqlFindAll = "select * from companies";
+    private final static String sqlDelete = "delete from companies where objectid=?";
+    private final static String sqlFindOne= "select * from companies where objectid=?";
 
 
 

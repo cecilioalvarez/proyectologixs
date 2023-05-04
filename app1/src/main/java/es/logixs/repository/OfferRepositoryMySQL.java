@@ -34,7 +34,7 @@ public class OfferRepositoryMySQL implements OfferRepository{
 
     @Override
     public void delete(Offer offer) {
-        String sql = "delete from Offer where id=?";
+        String sql = "delete from offer where id=?";
 
         try (Connection connection = DataBaseHelper.getConexion("mySQL");
              PreparedStatement query = connection.prepareStatement(sql)) {
@@ -51,7 +51,7 @@ public class OfferRepositoryMySQL implements OfferRepository{
         Offer offer = null;
 
         try (Connection conn = DataBaseHelper.getConexion("mySQL");
-             PreparedStatement stmt = conn.prepareStatement("select * from Offer where id=?")) {
+             PreparedStatement stmt = conn.prepareStatement("select * from offer where id=?")) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next())
@@ -73,7 +73,7 @@ public class OfferRepositoryMySQL implements OfferRepository{
         List<Offer> list = new ArrayList<>();
 
         try (Connection conn = DataBaseHelper.getConexion("mySQL");
-             PreparedStatement stmt = conn.prepareStatement("select * from Offer");
+             PreparedStatement stmt = conn.prepareStatement("select * from offer");
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
