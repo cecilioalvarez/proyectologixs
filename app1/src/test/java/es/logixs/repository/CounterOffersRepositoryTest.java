@@ -77,4 +77,11 @@ public class CounterOffersRepositoryTest {
 
         assertNull(counterOffersDeleted);
     }
+
+    @Test
+    void  should_findOne(){
+        CounterOffers counterOffersFound = counterOffersRepository.findOne(4);
+
+        assertEquals("name4",counterOffersFound.getName());
+    }
 }
