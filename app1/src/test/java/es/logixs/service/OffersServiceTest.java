@@ -4,7 +4,6 @@ import es.logixs.domain.CounterOffers;
 import es.logixs.domain.Offer;
 import es.logixs.repository.CounterOffersRepository;
 import es.logixs.repository.OfferRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,13 +20,11 @@ import static org.mockito.Mockito.*;
 class OffersServiceTest {
 
     @Mock
-    private static OfferRepository offerRepository;
-
+    private OfferRepository offerRepository;
     @Mock
-    private static CounterOffersRepository counterOffersRepository;
-
+    private CounterOffersRepository counterOffersRepository;
     @InjectMocks
-    private static OffersService offersService;
+    private OffersService offersService;
 
     @Test
     public void findAllCounterOffersTest() {
@@ -38,7 +35,6 @@ class OffersServiceTest {
         when(counterOffersRepository.findAll()).thenReturn(listCounterOffers);
 
         List<CounterOffers> listCounterOffersResult = offersService.findAllCounterOffer();
-
         verify(counterOffersRepository, times(1)).findAll();
         assertEquals(listCounterOffers, listCounterOffersResult);
     }
@@ -52,7 +48,6 @@ class OffersServiceTest {
         when(offerRepository.findAll()).thenReturn(listOffer);
 
         List<Offer> listOfferResult = offersService.findAllOffers();
-
         verify(offerRepository, times(1)).findAll();
         assertEquals(listOffer, listOfferResult);
     }
@@ -63,7 +58,6 @@ class OffersServiceTest {
         when(counterOffersRepository.insert(counterOffer)).thenReturn(counterOffer);
 
         CounterOffers insertedCounterOffer = offersService.insertCounterOffer(counterOffer);
-
         verify(counterOffersRepository, times(1)).insert(counterOffer);
         assertEquals(counterOffer, insertedCounterOffer);
     }
@@ -77,6 +71,20 @@ class OffersServiceTest {
 
         verify(offerRepository, times(1)).insert(offer);
         assertEquals(offer, insertedOffer);
+    }
+
+    @Test
+    public void deleteOfferTest() {
+        Offer offer = mock(Offer.class);
+        offersService.deleteOffer(offer);
+        verify(offerRepository, times(1)).delete(offer);
+    }
+
+    @Test
+    public void deleteCounterOffer() {
+        CounterOffers counterOffers = mock(CounterOffers.class);
+        offersService.deleteCounterOffer(counterOffers);
+        verify(counterOffersRepository, times(1)).delete(counterOffers);
     }
 
     @Test
@@ -104,5 +112,4 @@ class OffersServiceTest {
         verify(offerRepository, times(1)).findOne(id);
         assertEquals(offer, offerResult);
     }
-
 }
