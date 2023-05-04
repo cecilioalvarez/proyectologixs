@@ -32,23 +32,23 @@ public class LectorFichero {
     public List<String> leerLineas() throws IOException {
 
         List<String> lineas= new ArrayList<String>();
-      
-      
-        InputStream is =getClass().getClassLoader().getResourceAsStream("cargadatos.sql");
+
+
+        InputStream is =getClass().getClassLoader().getResourceAsStream(fichero);
         BufferedInputStream bis= new BufferedInputStream(is);
         BufferedReader reader = new BufferedReader(
         new InputStreamReader(bis, StandardCharsets.UTF_8));
-        
+
         String linea= reader.readLine();
-     
+
         while (linea != null) {
 
             linea=reader.readLine();
             lineas.add(linea);
-            
+
         }
-       
+
         return lineas;
-      
+
     }
 }
