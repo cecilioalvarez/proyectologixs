@@ -21,3 +21,5 @@
 .vscode/
 app1/target/
 .idea/
+app1/app1.iml
+app1.iml

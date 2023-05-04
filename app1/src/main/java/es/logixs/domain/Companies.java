@@ -7,6 +7,14 @@ public class Companies {
     private String name;
     private String taxId;
 
+    public Companies(String objectid, String code, String licenseId, String name, String taxId) {
+        this.objectid = objectid;
+        this.code = code;
+        this.licenseId = licenseId;
+        this.name = name;
+        this.taxId = taxId;
+    }
+
     public Companies(String objectid) {
         this.objectid = objectid;
     }

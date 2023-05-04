@@ -10,6 +10,10 @@ public class CounterOffers {
     private double counterOfferPrice;
     private double quantity;
 
+    public CounterOffers() {
+
+    }
+
     public CounterOffers(int id, String name, String vom, double originalPrice, double counterOfferPrice, double quantity) {
         this.id = id;
         this.name = name;
