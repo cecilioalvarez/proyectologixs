@@ -2,6 +2,7 @@ package es.logixs.repository.mysql;
 
 import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.Companies;
+import es.logixs.repository.CompaniesRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompaniesRepositoryMySQL {
+public class CompaniesRepositoryMySQL implements CompaniesRepository {
 
     private final static String sqlInsert = "insert into companies (objectid,code,licenseId,name,taxId) values (?,?,?,?,?)";
     private final static String sqlFindAll = "select * from companies";
@@ -19,7 +20,7 @@ public class CompaniesRepositoryMySQL {
 
 
 
-    public Companies insert(Companies company) {
+    public Companies insert(Companies company)  {
 
         try (Connection conexion = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentencia = conexion.prepareStatement(sqlInsert);) {
