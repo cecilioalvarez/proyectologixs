@@ -1,5 +1,6 @@
 package es.logixs.repository.mysql;
 
+import es.logixs.App;
 import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.CounterOffers;
 import es.logixs.repository.CounterOffersRepository;
@@ -20,7 +21,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public CounterOffers insert(CounterOffers counterOffer) {
-        Logger log= LogManager.getLogger(CounterOffersRepositoryMySQL.class);
+        Logger log= LogManager.getLogger(App.class);
         String query = "insert into counter_offers (id,name,vom,originalPrice,counterOfferPrice,quantity) values(?,?,?,?,?,?)";
         log.info("INSERTING INTO COUNTER OFFERS");
 
@@ -48,7 +49,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public CounterOffers update(CounterOffers counterOffer) {
-        Logger log= LogManager.getLogger(CounterOffersRepositoryMySQL.class);
+        Logger log= LogManager.getLogger(App.class);
         String query = "update counter_offers set name=? ,vom=? ,originalPrice=? ,counterOfferPrice=? ,quantity=? where id=?";
         log.info("UPDATING COUNTER OFFERS WITH ID: "+counterOffer.getId());
 
@@ -74,7 +75,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public void delete(CounterOffers counterOffer) {
-        Logger log= LogManager.getLogger(CounterOffersRepositoryMySQL.class);
+        Logger log= LogManager.getLogger(App.class);
         String query = "delete from counter_offers where id = ?";
         log.info("DELETING COUNTER OFFERS WITH ID: "+counterOffer.getId());
 
