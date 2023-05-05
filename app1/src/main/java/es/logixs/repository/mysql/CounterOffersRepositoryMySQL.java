@@ -48,7 +48,9 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public CounterOffers update(CounterOffers counterOffer) {
+        Logger log= LogManager.getLogger(CounterOffersRepositoryMySQL.class);
         String query = "update counter_offers set name=? ,vom=? ,originalPrice=? ,counterOfferPrice=? ,quantity=? where id=?";
+        log.info("UPDATING COUNTER OFFERS WITH ID: "+counterOffer.getId());
 
         try (
             Connection connection = new  DataBaseHelper().getConexion("mySQL");
@@ -61,8 +63,9 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
             statement.setDouble(5, counterOffer.getQuantity());
             statement.setInt(6, counterOffer.getId());
             statement.executeUpdate();
+            log.info("UPDATE SUCCESFUL");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            log.error("ERROR UPDATING COUNTER OFFERS:", e);
             throw new RuntimeException(e);
         }
 
