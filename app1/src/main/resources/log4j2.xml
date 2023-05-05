@@ -33,6 +33,15 @@
         <Logger name="es.logixs.repository.mysql.RequestRepositoryMySQL" level="info">
           <AppenderRef ref="mySQLrepoRequests"/>
         </Logger>
+        <Logger name="es.logixs.repository.mysql.SalesRepositoryMySQL" level="debug" additivity="false">
+            <AppenderRef ref="fichero" />
+        </Logger>
+        <Logger name="es.logixs.repository.mysql.SalesRepositoryMySQL" level="info">
+            <AppenderRef ref="fichero" />
+        </Logger>
+         <Logger name="es.logixs.repository.mysql.SalesRepositoryMySQL" level="warn">
+            <AppenderRef ref="fichero" />
+        </Logger>
 
     </Loggers>
 </Configuration>
