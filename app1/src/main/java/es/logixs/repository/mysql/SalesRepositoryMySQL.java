@@ -12,6 +12,9 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import es.logixs.config.DataBaseHelper;
 
 import es.logixs.domain.Sales;
@@ -29,11 +32,13 @@ public class SalesRepositoryMySQL implements SalesRepository {
 
     private final static String sqlFindOne = "select * from sales where id=?";
 
+    private static final Logger logger = LogManager.getLogger(SalesRepositoryMySQL.class);
+
     @Override
 
     public void delete(Sales sales) {
-
-        try (Connection conexion = new  DataBaseHelper().getConexion("mySQL");
+        logger.info("Borrando");
+        try (Connection conexion = new DataBaseHelper().getConexion("mySQL");
 
                 PreparedStatement sentencia = conexion.prepareStatement(sqlDelete);) {
 
@@ -43,10 +48,9 @@ public class SalesRepositoryMySQL implements SalesRepository {
 
         } catch (SQLException e) {
 
-            System.out.println("ha ocurrido un error");
+            logger.error("Ha ocurrido un error: ", e);
 
             throw new RuntimeException(e);
-
         }
 
     }
@@ -54,10 +58,10 @@ public class SalesRepositoryMySQL implements SalesRepository {
     @Override
 
     public List<Sales> findAll() {
-
         List<Sales> list = new ArrayList<Sales>();
+        logger.info("Buscando todos");
 
-        try (Connection conn = new  DataBaseHelper().getConexion("mySQL");
+        try (Connection conn = new DataBaseHelper().getConexion("mySQL");
 
                 PreparedStatement stmt = conn.prepareStatement(sqlFindAll);
 
@@ -74,13 +78,12 @@ public class SalesRepositoryMySQL implements SalesRepository {
             }
 
         } catch (SQLException e) {
-
-            System.out.println("ha ocurrido un error");
+            logger.error("Ha ocurrido un error: ", e);
 
             throw new RuntimeException(e);
 
         }
-
+        logger.info("Antes de retornar la lista");
         return list;
     }
 
@@ -90,10 +93,10 @@ public class SalesRepositoryMySQL implements SalesRepository {
 
         Sales sales = null;
 
-        try (Connection conn = new  DataBaseHelper().getConexion("mySQL");
+        logger.info("Encontrando uno");
+        try (Connection conn = new DataBaseHelper().getConexion("mySQL");
 
                 PreparedStatement stmt = conn.prepareStatement(sqlFindOne);) {
-
             stmt.setString(1, id);
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -109,21 +112,20 @@ public class SalesRepositoryMySQL implements SalesRepository {
             }
 
         } catch (SQLException e) {
-
-            System.out.println("ha ocurrido un error");
+            logger.error("Ha ocurrido un error", e);
 
             throw new RuntimeException(e);
 
         }
-
+        logger.info("Antes de retornar objeto");
         return sales;
     }
 
     @Override
 
     public Sales insert(Sales sales) {
-
-        try (Connection conexion = new  DataBaseHelper().getConexion("mySQL");
+        logger.info("Insertando ");
+        try (Connection conexion = new DataBaseHelper().getConexion("mySQL");
 
                 PreparedStatement sentencia = conexion.prepareStatement(sqlInsert);) {
 
@@ -144,13 +146,12 @@ public class SalesRepositoryMySQL implements SalesRepository {
             sentencia.executeUpdate();
 
         } catch (SQLException e) {
-
-            System.out.println(e.getMessage());
+            logger.error("Ha ocurrido un error :", e);
 
             throw new RuntimeException(e);
 
         }
-
+        logger.info("Antes de retornar objeto");
         return sales;
 
     }
@@ -158,8 +159,8 @@ public class SalesRepositoryMySQL implements SalesRepository {
     @Override
 
     public Sales update(Sales sales) {
-
-        try (Connection conexion = new  DataBaseHelper().getConexion("mySQL");
+        logger.info("Actualizando");
+        try (Connection conexion = new DataBaseHelper().getConexion("mySQL");
 
                 PreparedStatement sentencia = conexion.prepareStatement(sqlUpdate);) {
 
@@ -180,13 +181,12 @@ public class SalesRepositoryMySQL implements SalesRepository {
             sentencia.executeUpdate();
 
         } catch (SQLException e) {
-
-            System.out.println(e.getMessage());
+            logger.error("Ha ocurrido un error", e);
 
             throw new RuntimeException(e);
 
         }
-
+        logger.info("Antes de retornanr el objeto");
         return sales;
 
     }
