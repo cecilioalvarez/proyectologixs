@@ -12,23 +12,23 @@ public class ServicioPrueba {
 
     public List<String> getLista() {
 
-
-
         List<String> lista = List.of("hola", "que", "tal", "estas");
        
-       
+        milogger.info("entramos en el metodo getlista");
+        milogger.warn("la lista no puede estar vacia{}",lista);
+        milogger.debug("el tamaño de la lista es : {} los elementos son {}",lista.size(),lista);
+    
         try {
-            lista.add("nueva");
-            if (lista.size()<4)
-{
-                throw new IOException("todo peto");
-            }
-        } catch (IOException e) {
             
-            milogger.error("se ha producido un error",e);
+           throw new RuntimeException("la lista no se puede modificar");
+           
+        } catch (Exception e) {
+            
+           
+           milogger.error("se ha producido un error :", e);
         }
      
-
+        milogger.info("antes de retornar la lista");
         return lista;
 
     }

@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Appenders>
-        <Console name="consola" target="SYSTEM_OUT">
-        </Console>
+        <!-- <Console name="consola" target="SYSTEM_OUT">
+        </Console>-->
+        <File name="fichero" fileName="logs/app.log">
+            <PatternLayout>
+                <Pattern> %d{dd-MM-yy HH:mm:ss}  %p %c %m %n</Pattern>
+            </PatternLayout>
+        </File>
     </Appenders>
     <Loggers>
         <Root level="debug">
-            <AppenderRef ref="consola"/>
+            <AppenderRef ref="fichero" />
         </Root>
     </Loggers>
 </Configuration>
