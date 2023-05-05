@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import es.logixs.otros.ServicioPrueba;
+import es.logixs.otros2.ServicioPrueba2;
 
 /**
  * Hello world!
@@ -18,6 +19,10 @@ public final class App {
         ServicioPrueba servicio= new ServicioPrueba();
        
         List<String> lista=servicio.getLista();
+
+        ServicioPrueba2 servicio2= new ServicioPrueba2();
+       
+        List<String> lista2=servicio2.getLista();
 
         System.out.println("Hello World!");
         milogger.info("finalizamos  main");

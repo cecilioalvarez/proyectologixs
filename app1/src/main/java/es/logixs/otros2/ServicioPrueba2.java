@@ -1,4 +1,4 @@
-package es.logixs.otros;
+package es.logixs.otros2;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,17 +6,17 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ServicioPrueba {
+public class ServicioPrueba2 {
 
-    private static final Logger milogger= LogManager.getLogger(ServicioPrueba.class);
+    private static final Logger milogger= LogManager.getLogger(ServicioPrueba2.class);
 
     public List<String> getLista() {
 
         List<String> lista = List.of("hola", "que", "tal", "estas");
        
-        milogger.info("entramos en el metodo getlista");
-        milogger.warn("la lista no puede estar vacia{}",lista);
-        milogger.debug("el tamaño de la lista es : {} los elementos son {}",lista.size(),lista);
+        milogger.info("ENTRAMOS EN EL METODO GETLISTA");
+        milogger.warn("LA LISTA NO PUEDE ESTAR VACIA{}",lista);
+        milogger.debug("EL TAMAÑO DE LA LISTA ES : {} LOS ELEMNTOS SON{}",lista.size(),lista);
         
         try {
             
@@ -25,10 +25,10 @@ public class ServicioPrueba {
         } catch (Exception e) {
             
            
-           milogger.error("se ha producido un error :", e);
+           milogger.error("SE HA PRODUCIDO UN EROR :", e);
         }
      
-        milogger.info("antes de retornar la lista");
+        milogger.info("ANTES DE RETORNAR LA LISTA");
         return lista;
 
     }

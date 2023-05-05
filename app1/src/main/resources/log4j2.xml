@@ -5,13 +5,22 @@
         </Console>-->
         <File name="fichero" fileName="logs/app.log">
             <PatternLayout>
-                <Pattern> %d{dd-MM-yy HH:mm:ss}  %p %c %m %n</Pattern>
+                <Pattern> %d{dd-MM-yy HH:mm:ss} %p %c %m %n</Pattern>
+            </PatternLayout>
+        </File>
+         <File name="ficherootro" fileName="logs/appotro.log">
+            <PatternLayout>
+                <Pattern> %d{dd-MM-yy HH:mm:ss} %p %c %m %n</Pattern>
             </PatternLayout>
         </File>
     </Appenders>
     <Loggers>
-        <Root level="debug">
+        <Root level="error">
             <AppenderRef ref="fichero" />
         </Root>
+        <Logger name="es.logixs.otros2" level="debug" additivity="false">
+            <AppenderRef ref="ficherootro" />
+        </Logger>
+
     </Loggers>
 </Configuration>
