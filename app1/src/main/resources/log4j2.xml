@@ -18,9 +18,15 @@
         <Root level="error">
             <AppenderRef ref="fichero" />
         </Root>
-        <Logger name="es.logixs.otros2" level="debug" additivity="false">
-            <AppenderRef ref="ficherootro" />
+        <Logger name="es.logixs.repository.mysql.CompaniesRepositoryMySQL" level="debug" additivity="false">
+            <AppenderRef ref="fichero" />
         </Logger>
-
+        <Logger name="es.logixs.repository.mysql.CompaniesRepositoryMySQL" level="info">
+            <AppenderRef ref="fichero" />
+        </Logger>
+         <Logger name="es.logixs.repository.mysql.CompaniesRepositoryMySQL" level="warn">
+            <AppenderRef ref="fichero" />
+        </Logger>
     </Loggers>
+
 </Configuration>
