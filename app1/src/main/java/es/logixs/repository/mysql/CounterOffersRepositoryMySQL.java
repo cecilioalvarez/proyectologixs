@@ -11,11 +11,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
+
 public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public CounterOffers insert(CounterOffers counterOffer) {
+        Logger log= LogManager.getLogger(CounterOffersRepositoryMySQL.class);
         String query = "insert into counter_offers (id,name,vom,originalPrice,counterOfferPrice,quantity) values(?,?,?,?,?,?)";
+        log.info("INSERTING INTO COUNTER OFFERS");
+
+
 
         try (
             Connection connection = new  DataBaseHelper().getConexion("mySQL");
@@ -28,8 +37,9 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
             statement.setDouble(5, counterOffer.getCounterOfferPrice());
             statement.setDouble(6, counterOffer.getQuantity());
             statement.executeUpdate();
+            log.info("INSERT SUCCESFUL");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            log.error("ERROR INSERTING COUNTER OFFERS:", e);
             throw new RuntimeException(e);
         }
 
