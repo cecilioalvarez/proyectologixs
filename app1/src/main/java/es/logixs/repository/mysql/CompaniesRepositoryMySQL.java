@@ -21,10 +21,6 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
     private final static String sqlFindOne= "select * from companies where objectid=?";
     private static final Logger loggingTool= LogManager.getLogger(CompaniesRepositoryMySQL.class.getName());
 
-
-    /*loggingTool.info("ENTRAMOS EN EL METODO GETLISTA");
-            loggingTool.warn("LA LISTA NO PUEDE ESTAR VACIA{}",lista);
-            loggingTool.debug("EL TAMAÑO DE LA LISTA ES : {} LOS ELEMNTOS SON{}",lista.size(),lista);*/
     @Override
     public Companies insert(Companies company) {
         loggingTool.info("Companies.insert() is called");
