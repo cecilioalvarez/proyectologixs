@@ -8,7 +8,7 @@ public class Requests {
     private String companyId;
 
 
-    public Requests(String code, String offerId, String ownerId, String companyID) {
+    public Requests(String code, String offerId, String ownerId, String companyId) {
         this.code = code;
         this.offerId = offerId;
         this.ownerId = ownerId;
