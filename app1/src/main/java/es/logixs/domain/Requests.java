@@ -61,4 +61,15 @@ public class Requests {
     public void setCompanyId(String companyID) {
         this.companyId = companyID;
     }
+
+    @Override
+    public String toString() {
+        return "Requests{" +
+            "id='" + id + '\'' +
+            ", code='" + code + '\'' +
+            ", offerId='" + offerId + '\'' +
+            ", ownerId='" + ownerId + '\'' +
+            ", companyId='" + companyId + '\'' +
+            '}';
+    }
 }

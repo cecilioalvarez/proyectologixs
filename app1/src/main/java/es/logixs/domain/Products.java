@@ -124,4 +124,20 @@ public class Products {
     public void setDescAndSpecs(String descAndSpecs) {
         this.descAndSpecs = descAndSpecs;
     }
+
+    @Override
+    public String toString() {
+        return "Products{" +
+            "id='" + id + '\'' +
+            ", userId='" + userId + '\'' +
+            ", code='" + code + '\'' +
+            ", companyId='" + companyId + '\'' +
+            ", scientificName='" + scientificName + '\'' +
+            ", name='" + name + '\'' +
+            ", category='" + category + '\'' +
+            ", originCountryIso='" + originCountryIso + '\'' +
+            ", quality='" + quality + '\'' +
+            ", descAndSpecs='" + descAndSpecs + '\'' +
+            '}';
+    }
 }
