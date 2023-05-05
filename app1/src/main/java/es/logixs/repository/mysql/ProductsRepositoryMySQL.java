@@ -1,8 +1,11 @@
 package es.logixs.repository.mysql;
 
+import es.logixs.App;
 import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.Products;
 import es.logixs.repository.ProductsRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,9 +19,11 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
     private final static String sqlDelete = "delete from products where id=?";
     private final static String sqlFindAll = "select * from products;";
     private final static String sqlFindOne = "select * from products  where id=?;";
+    private static final Logger myLogger= LogManager.getLogger(App.class);
 
     @Override
     public Products insert(Products product) {
+        myLogger.info("Insertando un producto" + product.toString());
         try (Connection connection =new DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlInsert);) {
             sentence.setString(1, product.getId());
@@ -32,9 +37,9 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
             sentence.setString(9, product.getQuality());
             sentence.setString(10, product.getDescAndSpecs());
             sentence.executeUpdate();
+            myLogger.info("Producto insertado correctamente");
         } catch (SQLException e) {
-
-            System.out.println(e.getMessage());
+            myLogger.error("Error al insertar un producto " + e.getMessage());
             throw new RuntimeException(e);
         }
         return product;
@@ -43,6 +48,7 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
     @Override
     public Products findOne(String id) {
         Products product = null;
+        myLogger.info("Buscando un producto con id " + id);
         try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlFindOne);) {
             sentence.setString(1, id);
@@ -60,7 +66,9 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
                 product.setQuality(result.getString("quality"));
                 product.setDescAndSpecs(result.getString("descAndSpecs"));
             }
+            myLogger.info("Producto encontrado correctamente");
         } catch (SQLException e) {
+            myLogger.error("Error al buscar un producto " + e.getMessage());
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
@@ -70,7 +78,7 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
     @Override
     public List<Products> findAll() {
         List<Products> products = new ArrayList<>();
-
+        myLogger.info("Buscando todos los productos");
         try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlFindAll);) {
             ResultSet result = sentence.executeQuery();
@@ -87,9 +95,10 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
                 product.setQuality(result.getString("quality"));
                 product.setDescAndSpecs(result.getString("descAndSpecs"));
                 products.add(product);
+                myLogger.info("Producto encontrado correctamente");
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            myLogger.error("Error al buscar todos los productos " + e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -98,12 +107,14 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
 
     @Override
     public void delete(String id) {
+        myLogger.info("Borrando un producto con id " + id);
         try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlDelete);) {
             sentence.setString(1, id);
             sentence.executeUpdate();
+            myLogger.info("Producto borrado correctamente");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            myLogger.error("Error al borrar un producto " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
