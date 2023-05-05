@@ -13,6 +13,7 @@ import java.util.List;
 
 public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
+    
     @Override
     public CounterOffers insert(CounterOffers counterOffer) {
         String query = "insert into counter_offers (id,name,vom,originalPrice,counterOfferPrice,quantity) values(?,?,?,?,?,?)";
