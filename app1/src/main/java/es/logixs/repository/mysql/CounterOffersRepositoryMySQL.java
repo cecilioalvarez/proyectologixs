@@ -74,7 +74,9 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public void delete(CounterOffers counterOffer) {
+        Logger log= LogManager.getLogger(CounterOffersRepositoryMySQL.class);
         String query = "delete from counter_offers where id = ?";
+        log.info("DELETING COUNTER OFFERS WITH ID: "+counterOffer.getId());
 
         try (
             Connection connection = new  DataBaseHelper().getConexion("mySQL");
@@ -82,8 +84,9 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
         ) {
             statement.setInt(1, counterOffer.getId());
             statement.executeUpdate();
+            log.info("DELETE SUCCESFUL");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            log.error("ERROR DELETING COUNTER OFFER:", e);
             throw new RuntimeException(e);
         }
     }
