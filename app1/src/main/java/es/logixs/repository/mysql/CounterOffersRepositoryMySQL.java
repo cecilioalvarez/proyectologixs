@@ -126,6 +126,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public List<CounterOffers> findAll() {
+        Logger log= LogManager.getLogger(App.class);
         List<CounterOffers> counterOffersList = new ArrayList<>();
         String query = "select * from counter_offers";
         log.info("FINDING ALL COUNTER OFFERS");
@@ -146,7 +147,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
             }
         log.info("FOUND COUNTER OFFERS");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("ERROR SEARCHING ALL COUNTER OFFERS:", e);
             throw new RuntimeException(e);
         }
 
