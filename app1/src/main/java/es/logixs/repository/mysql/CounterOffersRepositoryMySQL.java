@@ -94,9 +94,11 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public CounterOffers findOne(int id) {
+        Logger log= LogManager.getLogger(App.class);
+
         CounterOffers counterOffer = null;
         String sql = "select * from counter_offers where id = ?";
-
+        log.info("SEARCHING COUNTER OFFER WITH ID: " + counterOffer.getId());
         try (
             Connection connection = new  DataBaseHelper().getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(sql)
@@ -113,8 +115,9 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
                     result.getDouble("quantity")
                 );
             }
+        log.info("COUNTER OFFER FOUND");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            log.error("ERROR SEARCHING COUNTER OFFER:", e);
             throw new RuntimeException(e);
         }
 
@@ -125,7 +128,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
     public List<CounterOffers> findAll() {
         List<CounterOffers> counterOffersList = new ArrayList<>();
         String query = "select * from counter_offers";
-
+        log.info("FINDING ALL COUNTER OFFERS");
         try (
             Connection connection = new  DataBaseHelper().getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(query);
@@ -141,6 +144,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
                     result.getDouble("quantity"))
                 );
             }
+        log.info("FOUND COUNTER OFFERS");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
