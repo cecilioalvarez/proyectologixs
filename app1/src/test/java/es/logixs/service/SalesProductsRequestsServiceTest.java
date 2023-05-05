@@ -37,7 +37,16 @@ public class SalesProductsRequestsServiceTest {
     @InjectMocks
     private SalesProductsRequestsService salesProductsRequestsService;
 
-    // Sales
+    @Test
+    public void deleteSalesTest() {
+        Sales sale = new Sales("0001","0001","0001","1A","1","1",true);
+        
+        salesProductsRequestsService.deleteSales(sale);
+
+        verify(salesRepositoryMock, times(1)).delete(sale);
+    }
+
+  
     @Test
     public void insertSalesTest() {
         Sales sales = mock(Sales.class);
@@ -50,14 +59,7 @@ public class SalesProductsRequestsServiceTest {
         assertIterableEquals(salesList, insertedSalesList);
     }
 
-    @Test
-    public void deleteSalesTest() {
-        Sales sale = new Sales("0001","0001","0001","1A","1","1",true);
-        
-        salesProductsRequestsService.deleteSales(sale);
-
-        verify(salesRepositoryMock, times(1)).delete(sale);
-    }
+  
 
     @Test
     public void findAllSalesTest() {
