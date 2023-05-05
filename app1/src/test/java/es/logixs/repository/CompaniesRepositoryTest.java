@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CompaniesRepositoryTest {
 
-    private static CompaniesRepositoryMySQL companiesRepository;
+    private static CompaniesRepository companiesRepository;
 
     @BeforeAll
     public static void init() {

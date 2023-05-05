@@ -19,8 +19,8 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
     private final static String sqlFindOne= "select * from companies where objectid=?";
 
 
-
-    public Companies insert(Companies company)  {
+    @Override
+    public Companies insert(Companies company) {
 
         try (Connection conexion = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentencia = conexion.prepareStatement(sqlInsert);) {
@@ -38,6 +38,7 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
         return company;
     }
 
+    @Override
     public void delete(Companies company) {
 
         try (Connection conexion = new  DataBaseHelper().getConexion("mySQL");
@@ -50,6 +51,7 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
         }
     }
 
+    @Override
     public List<Companies> findAll() {
 
 
@@ -71,6 +73,7 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
         return lista;
     }
 
+    @Override
     public Companies findOne(String objectid) {
 
 
