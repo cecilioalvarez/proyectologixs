@@ -5,6 +5,8 @@ import es.logixs.domain.User;
 import es.logixs.repository.UserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,8 +15,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class UserRepositoryMySQL implements UserRepository{
 
+    @Autowired
+    private DataBaseHelper dataBaseHelper;
     private static final Logger logger= LogManager.getLogger(UserRepositoryMySQL.class);
 
     private final static String sqlInsert = "insert into user (objectid,name,lastName,email) values (?,?,?,?)";
@@ -25,7 +30,7 @@ public class UserRepositoryMySQL implements UserRepository{
     @Override
     public User insert(User user) {
         logger.info("Trying to insert User with objectid: {}", user.getObjectid());
-        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
+        try (Connection connection = dataBaseHelper.getConexion("mySQL");
              PreparedStatement query = connection.prepareStatement(sqlInsert)) {
             query.setString(1, user.getObjectid());
             query.setString(2, user.getName());
@@ -43,7 +48,7 @@ public class UserRepositoryMySQL implements UserRepository{
     @Override
     public void delete(User user) {
         logger.info("Trying to delete User with objectid: {}", user.getObjectid());
-        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
+        try (Connection connection = dataBaseHelper.getConexion("mySQL");
              PreparedStatement query = connection.prepareStatement(sqlDelete)) {
             query.setString(1, user.getObjectid());
             query.executeUpdate();
@@ -58,7 +63,7 @@ public class UserRepositoryMySQL implements UserRepository{
     public User findOne(String objectid) {
         User user = null;
         logger.info("Trying to find User with objectid: {}", objectid);
-        try (Connection conn = new  DataBaseHelper().getConexion("mySQL");
+        try (Connection conn =dataBaseHelper.getConexion("mySQL");
              PreparedStatement stmt = conn.prepareStatement(sqlFindOne)) {
             stmt.setString(1, objectid);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -78,7 +83,7 @@ public class UserRepositoryMySQL implements UserRepository{
     public List<User> findAll() {
         List<User> list = new ArrayList<>();
         logger.info("Trying to find all Users");
-        try (Connection conn = new  DataBaseHelper().getConexion("mySQL");
+        try (Connection conn = dataBaseHelper.getConexion("mySQL");
              PreparedStatement stmt = conn.prepareStatement(sqlFindAll);
              ResultSet rs = stmt.executeQuery()) {
 

@@ -5,6 +5,7 @@ import es.logixs.domain.Offer;
 import es.logixs.repository.OfferRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class OfferRepositoryMySQL implements OfferRepository {
 
     private static final Logger logger = LogManager.getLogger(OfferRepositoryMySQL.class);

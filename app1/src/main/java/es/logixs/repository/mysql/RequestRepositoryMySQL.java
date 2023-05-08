@@ -1,16 +1,18 @@
 package es.logixs.repository.mysql;
 
-import es.logixs.App;
 import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.Requests;
+import es.logixs.main.App;
 import es.logixs.repository.RequestsRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class RequestRepositoryMySQL implements RequestsRepository {
     private final static String sqlInsert = "insert into Requests (code, offerId, ownerId, companyId) values (?,?,?,?);";
     private final static String sqlDelete = "delete from Requests where id=?";

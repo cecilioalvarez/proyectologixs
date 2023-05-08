@@ -1,11 +1,12 @@
 package es.logixs.repository.mysql;
 
-import es.logixs.App;
 import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.Products;
+import es.logixs.main.App;
 import es.logixs.repository.ProductsRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ProductsRepositoryMySQL implements ProductsRepository {
     private final static String sqlInsert = "insert into products (id, userId, code, companyId, scientificName, name, category, originCountryIso, quality, descAndSpecs) values (?,?,?,?,?,?,?,?,?,?);";
     private final static String sqlDelete = "delete from products where id=?";

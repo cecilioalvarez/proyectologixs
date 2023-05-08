@@ -1,4 +1,4 @@
-package es.logixs.config;
+package es.logixs.helper;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

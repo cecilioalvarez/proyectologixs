@@ -14,12 +14,14 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import es.logixs.config.DataBaseHelper;
 
 import es.logixs.domain.Sales;
 import es.logixs.repository.SalesRepository;
 
+@Component
 public class SalesRepositoryMySQL implements SalesRepository {
 
     private final static String sqlUpdate = "update  sales set ownerId=?, clientId=?, code=?, offerId=?, counterOfferId=?, isCounterOffer=? where id=?";

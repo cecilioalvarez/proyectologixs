@@ -12,7 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CompaniesRepositoryMySQL implements CompaniesRepository {
 
     private final static String sqlInsert = "insert into companies (objectid,code,licenseId,name,taxId) values (?,?,?,?,?)";
@@ -20,13 +23,14 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
     private final static String sqlDelete = "delete from companies where objectid=?";
     private final static String sqlFindOne = "select * from companies where objectid=?";
     private static final Logger loggingTool = LogManager.getLogger(CompaniesRepositoryMySQL.class.getName());
-
+    @Autowired
+    private DataBaseHelper dataBaseHelper;
     @Override
     public Companies insert(Companies company) {
         loggingTool.info("Companies.insert() is called");
         loggingTool.warn("The fields must be filled {}", company);
 
-        try (Connection conexion = new DataBaseHelper().getConexion("mySQL");
+        try (Connection conexion =dataBaseHelper.getConexion("mySQL");
                 PreparedStatement sentencia = conexion.prepareStatement(sqlInsert);) {
             sentencia.setString(1, company.getObjectid());
             sentencia.setString(2, company.getCode());
@@ -49,7 +53,7 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
         loggingTool.info("Companies.delete() is called");
         loggingTool.warn("Attempting to delete {}", company);
 
-        try (Connection conexion = new DataBaseHelper().getConexion("mySQL");
+        try (Connection conexion = dataBaseHelper.getConexion("mySQL");
                 PreparedStatement sentencia = conexion.prepareStatement(sqlDelete);) {
             sentencia.setString(1, company.getObjectid());
             sentencia.executeUpdate();
@@ -68,7 +72,7 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
         List<Companies> lista = new ArrayList<Companies>();
         loggingTool.warn("The fields must not be empty {}", lista);
 
-        try (Connection conn = new DataBaseHelper().getConexion("mySQL");
+        try (Connection conn = dataBaseHelper.getConexion("mySQL");
                 PreparedStatement stmt = conn.prepareStatement(sqlFindAll);
                 ResultSet rs = stmt.executeQuery()) {
 
@@ -94,7 +98,7 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
 
         Companies company = null;
 
-        try (Connection conn = new DataBaseHelper().getConexion("mySQL");
+        try (Connection conn =dataBaseHelper.getConexion("mySQL");
                 PreparedStatement stmt = conn.prepareStatement(sqlFindOne);
 
         ) {

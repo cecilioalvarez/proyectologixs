@@ -3,6 +3,8 @@ package es.logixs.config;
 import java.io.IOException;
 import java.util.List;
 
+import es.logixs.helper.LectorFichero;
+
 public class CargadorConsultasSQL {
     
   

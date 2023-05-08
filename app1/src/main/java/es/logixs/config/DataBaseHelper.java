@@ -1,39 +1,24 @@
 package es.logixs.config;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
-import java.util.Properties;
+import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class DataBaseHelper {
 
+    @Autowired
+    private DataSource dataSource;
 
     public  Connection getConexion(String tipoBaseDatos) throws SQLException {
 
-        Properties propiedades= new Properties();
-        InputStream is = getClass().getClassLoader().getResourceAsStream("database.properties");
-
-        try {
-            propiedades.load(is);
-        } catch (IOException e) {
-          
-            e.printStackTrace();
-        }
-
-        if (tipoBaseDatos.equals("mySQL")) {
-            return DriverManager.getConnection(propiedades.getProperty("url"),propiedades.getProperty("user"), propiedades.getProperty("password"));
-
-        } else {
-
-            return DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
-        }
+       return dataSource.getConnection();
 
     }
 
     public void executarConsulta(String sql) {
-
-
-
 
         try (Connection conexion =getConexion("mySQL");
              PreparedStatement sentencia = conexion.prepareStatement(sql);) {
