@@ -26,6 +26,7 @@ public final class App {
             System.out.println(c.getName());
             System.out.println(c.getObjectid());
         }
+        contexto.close();
 
       
 

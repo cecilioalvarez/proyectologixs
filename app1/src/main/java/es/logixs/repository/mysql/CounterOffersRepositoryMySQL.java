@@ -1,6 +1,5 @@
 package es.logixs.repository.mysql;
 
-import es.logixs.App;
 import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.CounterOffers;
 import es.logixs.repository.CounterOffersRepository;
@@ -12,17 +11,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
-<<<<<<< HEAD
-    public static final Logger log= LogManager.getLogger(App.class);
+    public static final Logger log= LogManager.getLogger(CounterOffersRepositoryMySQL.class);
 
-=======
-    
->>>>>>> 53389eb4466755a1bd1f74f43e21508cc746da62
     @Override
     public CounterOffers insert(CounterOffers counterOffer) {
         String query = "insert into counter_offers (id,name,vom,originalPrice,counterOfferPrice,quantity) values(?,?,?,?,?,?)";
