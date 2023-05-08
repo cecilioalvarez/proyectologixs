@@ -93,7 +93,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
         CounterOffers counterOffer = null;
         String sql = "select * from counter_offers where id = ?";
-        log.info("SEARCHING COUNTER OFFER WITH ID: " + counterOffer.getId());
+        //log.info("SEARCHING COUNTER OFFER WITH ID: " + counterOffer.getId());
         try (
             Connection connection = new  DataBaseHelper().getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(sql)
