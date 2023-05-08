@@ -19,8 +19,8 @@ public class UserRepositoryMySQL implements UserRepository{
 
     private final static String sqlInsert = "insert into user (objectid,name,lastName,email) values (?,?,?,?)";
     private final static String sqlDelete = "delete from user where objectid=?";
-    private final static String sqlFindAll = "select * from user where objectid=?";
-    private final static String sqlFindOne = "select * from user";
+    private final static String sqlFindAll = "select * from user";
+    private final static String sqlFindOne = "select * from user where objectid=?";
 
     @Override
     public User insert(User user) {

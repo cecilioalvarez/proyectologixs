@@ -19,6 +19,9 @@ public class Companies {
         this.objectid = objectid;
     }
 
+    public Companies() {
+    }
+
     public Companies(String code, String licenseId, String name, String taxId) {
         this.code = code;
         this.licenseId = licenseId;

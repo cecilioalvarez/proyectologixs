@@ -22,8 +22,11 @@ import es.logixs.domain.Companies;
 
 @ExtendWith(MockitoExtension.class)
 public class UsersCompaniesServiceTest {
+    @Mock
     public UserRepositoryMySQL userRepositoryMock;
+    @Mock
     public CompaniesRepositoryMySQL companiesRepositoryMock;
+    @InjectMocks
     public UsersCompanyService userCompaniesService;
 
     @Test
