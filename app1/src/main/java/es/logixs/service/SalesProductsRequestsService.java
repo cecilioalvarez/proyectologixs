@@ -10,6 +10,7 @@ import es.logixs.domain.Sales;
 import es.logixs.repository.ProductsRepository;
 import es.logixs.repository.RequestsRepository;
 import es.logixs.repository.SalesRepository;
+import org.springframework.stereotype.Component;
 
 @Component
 public class SalesProductsRequestsService {
@@ -75,7 +76,7 @@ public class SalesProductsRequestsService {
     public void deleteProducts(String id) {
         productsRepository.delete(id);
     }
-    
+
     // Requests
     public Requests insertRequests(Requests requests) {
         return requestsRepository.insert(requests);

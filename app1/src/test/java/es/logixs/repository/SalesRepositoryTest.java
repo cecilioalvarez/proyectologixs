@@ -7,13 +7,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.util.List;
 
+import es.logixs.helper.LectorFichero;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import es.logixs.config.CargadorConsultasSQL;
 import es.logixs.config.DataBaseHelper;
-import es.logixs.config.LectorFichero;
 import es.logixs.domain.Sales;
 import es.logixs.repository.mysql.SalesRepositoryMySQL;
 
@@ -69,7 +69,7 @@ public class SalesRepositoryTest {
     @Test
     public void updateTest() {
         Sales sales = new Sales("012","00012","0012","12A","12","12",true);
-        
+
         sales.setOwnerId("0015");
         sales.setCode("15A");
 
@@ -78,5 +78,5 @@ public class SalesRepositoryTest {
         assertEquals(sales, updatedSales);
     }
 
-    
+
 }

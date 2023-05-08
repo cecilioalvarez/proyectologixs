@@ -2,8 +2,8 @@ package es.logixs.repository;
 
 import es.logixs.config.CargadorConsultasSQL;
 import es.logixs.config.DataBaseHelper;
-import es.logixs.config.LectorFichero;
 import es.logixs.domain.Products;
+import es.logixs.helper.LectorFichero;
 import es.logixs.repository.mysql.ProductsRepositoryMySQL;
 
 import org.junit.jupiter.api.BeforeAll;

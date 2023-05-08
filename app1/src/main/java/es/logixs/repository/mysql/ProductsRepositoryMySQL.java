@@ -18,6 +18,8 @@ import java.util.List;
 
 @Component
 public class ProductsRepositoryMySQL implements ProductsRepository {
+    @Autowired
+    private DataBaseHelper dataBaseHelper;
     private final static String sqlInsert = "insert into products (id, userId, code, companyId, scientificName, name, category, originCountryIso, quality, descAndSpecs) values (?,?,?,?,?,?,?,?,?,?);";
     private final static String sqlDelete = "delete from products where id=?";
     private final static String sqlFindAll = "select * from products;";
