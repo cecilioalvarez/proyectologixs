@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,13 +21,16 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     public static final Logger log= LogManager.getLogger(CounterOffersRepositoryMySQL.class);
 
+    @Autowired
+    private DataBaseHelper dataBaseHelper;
+
     @Override
     public CounterOffers insert(CounterOffers counterOffer) {
         String query = "insert into counter_offers (id,name,vom,originalPrice,counterOfferPrice,quantity) values(?,?,?,?,?,?)";
         log.info("INSERTING INTO COUNTER OFFERS");
 
         try (
-            Connection connection = new  DataBaseHelper().getConexion("mySQL");
+            Connection connection = dataBaseHelper.getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(query)
         ) {
             statement.setInt(1, counterOffer.getId());
@@ -51,7 +55,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
         log.info("UPDATING COUNTER OFFERS WITH ID: "+counterOffer.getId());
 
         try (
-            Connection connection = new  DataBaseHelper().getConexion("mySQL");
+            Connection connection = dataBaseHelper.getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(query)
         ) {
             statement.setString(1, counterOffer.getName());
@@ -76,7 +80,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
         log.info("DELETING COUNTER OFFERS WITH ID: "+counterOffer.getId());
 
         try (
-            Connection connection = new  DataBaseHelper().getConexion("mySQL");
+            Connection connection = dataBaseHelper.getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(query)
         ) {
             statement.setInt(1, counterOffer.getId());
@@ -95,7 +99,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
         String sql = "select * from counter_offers where id = ?";
         //log.info("SEARCHING COUNTER OFFER WITH ID: " + counterOffer.getId());
         try (
-            Connection connection = new  DataBaseHelper().getConexion("mySQL");
+            Connection connection = dataBaseHelper.getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(sql)
         ) {
             statement.setInt(1, id);
@@ -121,12 +125,12 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public List<CounterOffers> findAll() {
-        
+
         List<CounterOffers> counterOffersList = new ArrayList<>();
         String query = "select * from counter_offers";
         log.info("FINDING ALL COUNTER OFFERS");
         try (
-            Connection connection = new  DataBaseHelper().getConexion("mySQL");
+            Connection connection = dataBaseHelper.getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet result = statement.executeQuery()
         ) {

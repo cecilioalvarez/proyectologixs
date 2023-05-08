@@ -4,9 +4,11 @@ import es.logixs.domain.CounterOffers;
 import es.logixs.domain.Offer;
 import es.logixs.repository.CounterOffersRepository;
 import es.logixs.repository.OfferRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class OffersService {
 
     private final OfferRepository offerRepository;
