@@ -6,6 +6,7 @@ import es.logixs.main.App;
 import es.logixs.repository.ProductsRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -23,10 +24,13 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
     private final static String sqlFindOne = "select * from products  where id=?;";
     private static final Logger myLogger= LogManager.getLogger(App.class);
 
+    @Autowired
+    private DataBaseHelper dataBaseHelper;
+    
     @Override
     public Products insert(Products product) {
         myLogger.info("Insertando un producto" + product.toString());
-        try (Connection connection =new DataBaseHelper().getConexion("mySQL");
+        try (Connection connection = dataBaseHelper.getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlInsert);) {
             sentence.setString(1, product.getId());
             sentence.setString(2, product.getUserId());
@@ -51,7 +55,7 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
     public Products findOne(String id) {
         Products product = null;
         myLogger.info("Buscando un producto con id " + id);
-        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
+        try (Connection connection = dataBaseHelper.getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlFindOne);) {
             sentence.setString(1, id);
             ResultSet result = sentence.executeQuery();
@@ -81,7 +85,7 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
     public List<Products> findAll() {
         List<Products> products = new ArrayList<>();
         myLogger.info("Buscando todos los productos");
-        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
+        try (Connection connection = dataBaseHelper.getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlFindAll);) {
             ResultSet result = sentence.executeQuery();
             while (result.next()) {
@@ -110,7 +114,7 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
     @Override
     public void delete(String id) {
         myLogger.info("Borrando un producto con id " + id);
-        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
+        try (Connection connection = dataBaseHelper.getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlDelete);) {
             sentence.setString(1, id);
             sentence.executeUpdate();

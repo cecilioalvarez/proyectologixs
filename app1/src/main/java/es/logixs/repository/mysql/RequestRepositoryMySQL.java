@@ -6,6 +6,7 @@ import es.logixs.main.App;
 import es.logixs.repository.RequestsRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -20,10 +21,13 @@ public class RequestRepositoryMySQL implements RequestsRepository {
     private final static String sqlFindOne = "select * from Requests where id=?;";
     private static final Logger myLogger= LogManager.getLogger(App.class);
 
+    @Autowired
+    private DataBaseHelper dataBaseHelper;
+
     @Override
     public Requests insert(Requests requests) {
             myLogger.info("Insertando una solicitud " + requests.toString());
-        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
+        try (Connection connection = dataBaseHelper.getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlInsert);) {
             sentence.setString(1, requests.getCode());
             sentence.setString(2, requests.getOfferId());
@@ -42,7 +46,7 @@ public class RequestRepositoryMySQL implements RequestsRepository {
     public Requests findOne(String id) {
         Requests requests = null;
         myLogger.info("Buscando una solicitud con id " + id);
-        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
+        try (Connection connection = dataBaseHelper.getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlFindOne);) {
             sentence.setString(1, id);
             ResultSet result = sentence.executeQuery();
@@ -65,7 +69,7 @@ public class RequestRepositoryMySQL implements RequestsRepository {
     public List<Requests> findAll() {
         List<Requests> requests = new ArrayList<>();
             myLogger.info("Buscando todas las solicitudes");
-        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
+        try (Connection connection = dataBaseHelper.getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlFindAll);) {
             ResultSet result = sentence.executeQuery();
             while (result.next()) {
@@ -88,7 +92,7 @@ public class RequestRepositoryMySQL implements RequestsRepository {
     @Override
     public void delete(String id) {
             myLogger.info("Eliminando una solicitud con id " + id);
-        try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
+        try (Connection connection = dataBaseHelper.getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlDelete);) {
             sentence.setString(1, id);
             sentence.executeUpdate();

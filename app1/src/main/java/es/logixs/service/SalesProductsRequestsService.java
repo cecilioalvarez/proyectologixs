@@ -2,6 +2,8 @@ package es.logixs.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import es.logixs.domain.Products;
 import es.logixs.domain.Requests;
 import es.logixs.domain.Sales;
@@ -9,6 +11,7 @@ import es.logixs.repository.ProductsRepository;
 import es.logixs.repository.RequestsRepository;
 import es.logixs.repository.SalesRepository;
 
+@Component
 public class SalesProductsRequestsService {
     private SalesRepository salesRepository;
     private ProductsRepository productsRepository;

@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import es.logixs.config.DataBaseHelper;
@@ -36,11 +37,14 @@ public class SalesRepositoryMySQL implements SalesRepository {
 
     private static final Logger logger = LogManager.getLogger(SalesRepositoryMySQL.class);
 
+    @Autowired
+    private DataBaseHelper dataBaseHelper;
+    
     @Override
 
     public void delete(Sales sales) {
         logger.info("Borrando");
-        try (Connection conexion = new DataBaseHelper().getConexion("mySQL");
+        try (Connection conexion = dataBaseHelper.getConexion("mySQL");
 
                 PreparedStatement sentencia = conexion.prepareStatement(sqlDelete);) {
 
@@ -63,7 +67,7 @@ public class SalesRepositoryMySQL implements SalesRepository {
         List<Sales> list = new ArrayList<Sales>();
         logger.info("Buscando todos");
 
-        try (Connection conn = new DataBaseHelper().getConexion("mySQL");
+        try (Connection conn = dataBaseHelper.getConexion("mySQL");
 
                 PreparedStatement stmt = conn.prepareStatement(sqlFindAll);
 
@@ -96,7 +100,7 @@ public class SalesRepositoryMySQL implements SalesRepository {
         Sales sales = null;
 
         logger.info("Encontrando uno");
-        try (Connection conn = new DataBaseHelper().getConexion("mySQL");
+        try (Connection conn = dataBaseHelper.getConexion("mySQL");
 
                 PreparedStatement stmt = conn.prepareStatement(sqlFindOne);) {
             stmt.setString(1, id);
@@ -127,7 +131,7 @@ public class SalesRepositoryMySQL implements SalesRepository {
 
     public Sales insert(Sales sales) {
         logger.info("Insertando ");
-        try (Connection conexion = new DataBaseHelper().getConexion("mySQL");
+        try (Connection conexion = dataBaseHelper.getConexion("mySQL");
 
                 PreparedStatement sentencia = conexion.prepareStatement(sqlInsert);) {
 
@@ -162,7 +166,7 @@ public class SalesRepositoryMySQL implements SalesRepository {
 
     public Sales update(Sales sales) {
         logger.info("Actualizando");
-        try (Connection conexion = new DataBaseHelper().getConexion("mySQL");
+        try (Connection conexion = dataBaseHelper.getConexion("mySQL");
 
                 PreparedStatement sentencia = conexion.prepareStatement(sqlUpdate);) {
 
