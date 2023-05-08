@@ -2,19 +2,18 @@ package es.logixs.service;
 
 import es.logixs.domain.User;
 import es.logixs.domain.Companies;
-import es.logixs.repository.mysql.CompaniesRepositoryMySQL;
-import es.logixs.repository.mysql.UserRepositoryMySQL;
-
+import es.logixs.repository.CompaniesRepository;
+import es.logixs.repository.UserRepository;
 import java.util.List;
 
 public class UsersCompanyService {
 
-    private UserRepositoryMySQL repositorioUserMySQL;
-    private CompaniesRepositoryMySQL repositorioCompaniesMySQL;
+    private UserRepository repositorioUserMySQL;
+    private CompaniesRepository repositorioCompaniesMySQL;
 
-    public UsersCompanyService(UserRepositoryMySQL repositorioUserMySQL, CompaniesRepositoryMySQL repositorioCompaniesMySQL) {
-        this.repositorioUserMySQL = repositorioUserMySQL;
-        this.repositorioCompaniesMySQL = repositorioCompaniesMySQL;
+    public UsersCompanyService(UserRepository repoUsers, CompaniesRepository repoCompanies) {
+        this.repositorioUserMySQL = repoUsers;
+        this.repositorioCompaniesMySQL = repoCompanies;
     }
 
     public void deleteUser(User user) {

@@ -1,16 +1,32 @@
 package es.logixs;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import es.logixs.domain.Companies;
+import es.logixs.repository.CompaniesRepository;
+import es.logixs.repository.UserRepository;
+import es.logixs.repository.mysql.CompaniesRepositoryMySQL;
+import es.logixs.repository.mysql.UserRepositoryMySQL;
+import es.logixs.service.UsersCompanyService;
 
 /**
  * Hello world!
  */
 public final class App {
    
-    private static final Logger milogger= LogManager.getLogger(App.class);
     public static void main(String[] args) {
        
+        UserRepository repoUsers= new UserRepositoryMySQL();
+        CompaniesRepository repoCompanies= new CompaniesRepositoryMySQL();
+        UsersCompanyService servicio= new UsersCompanyService(repoUsers, repoCompanies);
+
+        for (Companies c: servicio.findAllCompanies()) {
+
+            System.out.println(c.getName());
+            System.out.println(c.getObjectid());
+        }
+
+      
+
+
        
         
     
