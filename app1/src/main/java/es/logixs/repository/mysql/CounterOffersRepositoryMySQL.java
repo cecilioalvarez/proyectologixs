@@ -1,5 +1,6 @@
 package es.logixs.repository.mysql;
 
+import es.logixs.App;
 import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.CounterOffers;
 import es.logixs.repository.CounterOffersRepository;
@@ -16,10 +17,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
+<<<<<<< HEAD
+    public static final Logger log= LogManager.getLogger(App.class);
+
+=======
     
+>>>>>>> 53389eb4466755a1bd1f74f43e21508cc746da62
     @Override
     public CounterOffers insert(CounterOffers counterOffer) {
         String query = "insert into counter_offers (id,name,vom,originalPrice,counterOfferPrice,quantity) values(?,?,?,?,?,?)";
+        log.info("INSERTING INTO COUNTER OFFERS");
 
         try (
             Connection connection = new  DataBaseHelper().getConexion("mySQL");
@@ -32,8 +39,9 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
             statement.setDouble(5, counterOffer.getCounterOfferPrice());
             statement.setDouble(6, counterOffer.getQuantity());
             statement.executeUpdate();
+            log.info("INSERT SUCCESFUL");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            log.error("ERROR INSERTING COUNTER OFFERS:", e);
             throw new RuntimeException(e);
         }
 
@@ -43,6 +51,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
     @Override
     public CounterOffers update(CounterOffers counterOffer) {
         String query = "update counter_offers set name=? ,vom=? ,originalPrice=? ,counterOfferPrice=? ,quantity=? where id=?";
+        log.info("UPDATING COUNTER OFFERS WITH ID: "+counterOffer.getId());
 
         try (
             Connection connection = new  DataBaseHelper().getConexion("mySQL");
@@ -55,8 +64,9 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
             statement.setDouble(5, counterOffer.getQuantity());
             statement.setInt(6, counterOffer.getId());
             statement.executeUpdate();
+            log.info("UPDATE SUCCESFUL");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            log.error("ERROR UPDATING COUNTER OFFERS:", e);
             throw new RuntimeException(e);
         }
 
@@ -66,6 +76,7 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
     @Override
     public void delete(CounterOffers counterOffer) {
         String query = "delete from counter_offers where id = ?";
+        log.info("DELETING COUNTER OFFERS WITH ID: "+counterOffer.getId());
 
         try (
             Connection connection = new  DataBaseHelper().getConexion("mySQL");
@@ -73,17 +84,19 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
         ) {
             statement.setInt(1, counterOffer.getId());
             statement.executeUpdate();
+            log.info("DELETE SUCCESFUL");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            log.error("ERROR DELETING COUNTER OFFER:", e);
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public CounterOffers findOne(int id) {
+
         CounterOffers counterOffer = null;
         String sql = "select * from counter_offers where id = ?";
-
+        log.info("SEARCHING COUNTER OFFER WITH ID: " + counterOffer.getId());
         try (
             Connection connection = new  DataBaseHelper().getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(sql)
@@ -100,8 +113,9 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
                     result.getDouble("quantity")
                 );
             }
+        log.info("COUNTER OFFER FOUND");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            log.error("ERROR SEARCHING COUNTER OFFER:", e);
             throw new RuntimeException(e);
         }
 
@@ -110,9 +124,10 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
     @Override
     public List<CounterOffers> findAll() {
+        
         List<CounterOffers> counterOffersList = new ArrayList<>();
         String query = "select * from counter_offers";
-
+        log.info("FINDING ALL COUNTER OFFERS");
         try (
             Connection connection = new  DataBaseHelper().getConexion("mySQL");
             PreparedStatement statement = connection.prepareStatement(query);
@@ -128,8 +143,9 @@ public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
                     result.getDouble("quantity"))
                 );
             }
+        log.info("FOUND COUNTER OFFERS");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("ERROR SEARCHING ALL COUNTER OFFERS:", e);
             throw new RuntimeException(e);
         }
 
