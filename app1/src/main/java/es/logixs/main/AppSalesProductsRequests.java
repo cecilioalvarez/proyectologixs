@@ -8,7 +8,7 @@ import es.logixs.domain.Requests;
 import es.logixs.domain.Sales;
 import es.logixs.service.SalesProductsRequestsService;
 
-public class AppSales {
+public class AppSalesProductsRequests {
     public static void main(String[] args) {
         
         AnnotationConfigApplicationContext contexto = new AnnotationConfigApplicationContext(ConfiguradorSpring.class);
