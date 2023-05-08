@@ -28,7 +28,7 @@ public class RequestRepositoryMySQL implements RequestsRepository {
     public Requests insert(Requests requests) {
             myLogger.info("Insertando una solicitud " + requests.toString());
         try (Connection connection = dataBaseHelper.getConexion("mySQL");
-             PreparedStatement sentence = connection.prepareStatement(sqlInsert);) {
+             PreparedStatement sentence = connection.prepareStatement(sqlInsert)) {
             sentence.setString(1, requests.getCode());
             sentence.setString(2, requests.getOfferId());
             sentence.setString(3, requests.getOwnerId());
@@ -47,7 +47,7 @@ public class RequestRepositoryMySQL implements RequestsRepository {
         Requests requests = null;
         myLogger.info("Buscando una solicitud con id " + id);
         try (Connection connection = dataBaseHelper.getConexion("mySQL");
-             PreparedStatement sentence = connection.prepareStatement(sqlFindOne);) {
+             PreparedStatement sentence = connection.prepareStatement(sqlFindOne)) {
             sentence.setString(1, id);
             ResultSet result = sentence.executeQuery();
             if (result.next()) {
@@ -70,7 +70,7 @@ public class RequestRepositoryMySQL implements RequestsRepository {
         List<Requests> requests = new ArrayList<>();
             myLogger.info("Buscando todas las solicitudes");
         try (Connection connection = dataBaseHelper.getConexion("mySQL");
-             PreparedStatement sentence = connection.prepareStatement(sqlFindAll);) {
+             PreparedStatement sentence = connection.prepareStatement(sqlFindAll)) {
             ResultSet result = sentence.executeQuery();
             while (result.next()) {
                 Requests request = new Requests(result.getString("id"));
@@ -93,7 +93,7 @@ public class RequestRepositoryMySQL implements RequestsRepository {
     public void delete(String id) {
             myLogger.info("Eliminando una solicitud con id " + id);
         try (Connection connection = dataBaseHelper.getConexion("mySQL");
-             PreparedStatement sentence = connection.prepareStatement(sqlDelete);) {
+             PreparedStatement sentence = connection.prepareStatement(sqlDelete)) {
             sentence.setString(1, id);
             sentence.executeUpdate();
             myLogger.info("Solicitud eliminada correctamente");

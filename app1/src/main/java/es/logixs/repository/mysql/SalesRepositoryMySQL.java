@@ -39,14 +39,14 @@ public class SalesRepositoryMySQL implements SalesRepository {
 
     @Autowired
     private DataBaseHelper dataBaseHelper;
-    
+
     @Override
 
     public void delete(Sales sales) {
         logger.info("Borrando");
         try (Connection conexion = dataBaseHelper.getConexion("mySQL");
 
-                PreparedStatement sentencia = conexion.prepareStatement(sqlDelete);) {
+                PreparedStatement sentencia = conexion.prepareStatement(sqlDelete)) {
 
             sentencia.setString(1, sales.getId());
 
@@ -64,7 +64,7 @@ public class SalesRepositoryMySQL implements SalesRepository {
     @Override
 
     public List<Sales> findAll() {
-        List<Sales> list = new ArrayList<Sales>();
+        List<Sales> list = new ArrayList<>();
         logger.info("Buscando todos");
 
         try (Connection conn = dataBaseHelper.getConexion("mySQL");
@@ -102,12 +102,12 @@ public class SalesRepositoryMySQL implements SalesRepository {
         logger.info("Encontrando uno");
         try (Connection conn = dataBaseHelper.getConexion("mySQL");
 
-                PreparedStatement stmt = conn.prepareStatement(sqlFindOne);) {
+                PreparedStatement stmt = conn.prepareStatement(sqlFindOne)) {
             stmt.setString(1, id);
 
             try (ResultSet rs = stmt.executeQuery()) {
 
-                if (rs.next() != false)
+                if (rs.next())
 
                     sales = new Sales(rs.getString("id"), rs.getString("ownerId"), rs.getString("clientId"),
 
@@ -133,7 +133,7 @@ public class SalesRepositoryMySQL implements SalesRepository {
         logger.info("Insertando ");
         try (Connection conexion = dataBaseHelper.getConexion("mySQL");
 
-                PreparedStatement sentencia = conexion.prepareStatement(sqlInsert);) {
+                PreparedStatement sentencia = conexion.prepareStatement(sqlInsert)) {
 
             sentencia.setString(1, sales.getId());
 
@@ -168,7 +168,7 @@ public class SalesRepositoryMySQL implements SalesRepository {
         logger.info("Actualizando");
         try (Connection conexion = dataBaseHelper.getConexion("mySQL");
 
-                PreparedStatement sentencia = conexion.prepareStatement(sqlUpdate);) {
+                PreparedStatement sentencia = conexion.prepareStatement(sqlUpdate)) {
 
             sentencia.setString(1, sales.getOwnerId());
 
