@@ -26,9 +26,7 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
     private final static String sqlFindOne = "select * from products  where id=?;";
     private static final Logger myLogger= LogManager.getLogger(App.class);
 
-    @Autowired
-    private DataBaseHelper dataBaseHelper;
-    
+
     @Override
     public Products insert(Products product) {
         myLogger.info("Insertando un producto" + product.toString());
