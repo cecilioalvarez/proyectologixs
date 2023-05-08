@@ -10,13 +10,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.logixs.helper.LectorFichero;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 
 
 public class CargadorConsultasSQLTest {
-    /* 
+    /*
     @Test
     void testCargarFichero() throws IOException {
         LectorFichero lector= new LectorFichero("cargadatos.sql");
@@ -39,7 +40,7 @@ public class CargadorConsultasSQLTest {
         //porque le mockeo pero no le uso para nada objeto vacio
         DataBaseHelper dataBaseHelperMock= Mockito.mock(DataBaseHelper.class);
         CargadorConsultasSQL cargador= new CargadorConsultasSQL(lectorMock, dataBaseHelperMock);
-        
+
         //act
         int lineas=cargador.cargarFichero();
         //assertiions
