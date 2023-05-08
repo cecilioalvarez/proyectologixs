@@ -25,13 +25,14 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
     private static final Logger loggingTool = LogManager.getLogger(CompaniesRepositoryMySQL.class.getName());
     @Autowired
     private DataBaseHelper dataBaseHelper;
+
     @Override
     public Companies insert(Companies company) {
         loggingTool.info("Companies.insert() is called");
         loggingTool.warn("The fields must be filled {}", company);
 
         try (Connection conexion =dataBaseHelper.getConexion("mySQL");
-                PreparedStatement sentencia = conexion.prepareStatement(sqlInsert);) {
+                PreparedStatement sentencia = conexion.prepareStatement(sqlInsert)) {
             sentencia.setString(1, company.getObjectid());
             sentencia.setString(2, company.getCode());
             sentencia.setString(3, company.getLicenseId());
@@ -54,7 +55,7 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
         loggingTool.warn("Attempting to delete {}", company);
 
         try (Connection conexion = dataBaseHelper.getConexion("mySQL");
-                PreparedStatement sentencia = conexion.prepareStatement(sqlDelete);) {
+                PreparedStatement sentencia = conexion.prepareStatement(sqlDelete)) {
             sentencia.setString(1, company.getObjectid());
             sentencia.executeUpdate();
             loggingTool.debug("Object company has an state of {}:", company);
@@ -69,7 +70,7 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
     public List<Companies> findAll() {
         loggingTool.info("Companies.findAll() is called");
 
-        List<Companies> lista = new ArrayList<Companies>();
+        List<Companies> lista = new ArrayList<>();
         loggingTool.warn("The fields must not be empty {}", lista);
 
         try (Connection conn = dataBaseHelper.getConexion("mySQL");
@@ -99,9 +100,7 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
         Companies company = null;
 
         try (Connection conn =dataBaseHelper.getConexion("mySQL");
-                PreparedStatement stmt = conn.prepareStatement(sqlFindOne);
-
-        ) {
+                PreparedStatement stmt = conn.prepareStatement(sqlFindOne)) {
             stmt.setString(1, objectid);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {

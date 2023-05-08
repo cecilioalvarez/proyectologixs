@@ -31,7 +31,7 @@ public class ProductsRepositoryMySQL implements ProductsRepository {
     public Products insert(Products product) {
         myLogger.info("Insertando un producto" + product.toString());
         try (Connection connection = dataBaseHelper.getConexion("mySQL");
-             PreparedStatement sentence = connection.prepareStatement(sqlInsert);) {
+             PreparedStatement sentence = connection.prepareStatement(sqlInsert)) {
             sentence.setString(1, product.getId());
             sentence.setString(2, product.getUserId());
             sentence.setString(3, product.getCode());
