@@ -18,8 +18,14 @@
         <Root level="error">
             <AppenderRef ref="fichero" />
         </Root>
-        <Logger name="es.logixs.otros2" level="debug" additivity="false">
-            <AppenderRef ref="ficherootro" />
+        <Logger name="es.logixs.repository.mysql.CompaniesRepositoryMySQL" level="debug" additivity="false">
+            <AppenderRef ref="fichero" />
+        </Logger>
+        <Logger name="es.logixs.repository.mysql.CompaniesRepositoryMySQL" level="info">
+            <AppenderRef ref="fichero" />
+        </Logger>
+         <Logger name="es.logixs.repository.mysql.CompaniesRepositoryMySQL" level="warn">
+            <AppenderRef ref="fichero" />
         </Logger>
         <Logger name="es.logixs.repository.mysql.ProductsRepositoryMySQL" level="info">
           <AppenderRef ref="mySQLrepoProducts"/>
@@ -27,8 +33,19 @@
         <Logger name="es.logixs.repository.mysql.RequestRepositoryMySQL" level="info">
           <AppenderRef ref="mySQLrepoRequests"/>
         </Logger>
+<<<<<<< HEAD
         <Logger name="es.logixs.repository.mysql.CounterOffersRepositoryMySQL" level="info">
           <AppenderRef ref="ficherootro"/>
+=======
+        <Logger name="es.logixs.repository.mysql.SalesRepositoryMySQL" level="debug" additivity="false">
+            <AppenderRef ref="fichero" />
+        </Logger>
+        <Logger name="es.logixs.repository.mysql.SalesRepositoryMySQL" level="info">
+            <AppenderRef ref="fichero" />
+        </Logger>
+         <Logger name="es.logixs.repository.mysql.SalesRepositoryMySQL" level="warn">
+            <AppenderRef ref="fichero" />
+>>>>>>> 53389eb4466755a1bd1f74f43e21508cc746da62
         </Logger>
 
     </Loggers>

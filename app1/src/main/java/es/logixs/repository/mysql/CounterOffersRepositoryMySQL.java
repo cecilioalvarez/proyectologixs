@@ -19,8 +19,12 @@ import org.apache.logging.log4j.Logger;
 
 public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
 
+<<<<<<< HEAD
     public static final Logger log= LogManager.getLogger(App.class);
 
+=======
+    
+>>>>>>> 53389eb4466755a1bd1f74f43e21508cc746da62
     @Override
     public CounterOffers insert(CounterOffers counterOffer) {
         String query = "insert into counter_offers (id,name,vom,originalPrice,counterOfferPrice,quantity) values(?,?,?,?,?,?)";

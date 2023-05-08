@@ -20,17 +20,17 @@ public class RequestRepositoryMySQL implements RequestsRepository {
 
     @Override
     public Requests insert(Requests requests) {
+            myLogger.info("Insertando una solicitud " + requests.toString());
         try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlInsert);) {
-            myLogger.info("Insertando una solicitud " + requests.toString());
             sentence.setString(1, requests.getCode());
             sentence.setString(2, requests.getOfferId());
             sentence.setString(3, requests.getOwnerId());
             sentence.setString(4, requests.getCompanyId());
             sentence.executeUpdate();
+            myLogger.info("Solicitud insertada correctamente");
         } catch (SQLException e) {
             myLogger.error("Error al insertar una solicitud " + e.getMessage());
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
         return requests;
@@ -39,9 +39,9 @@ public class RequestRepositoryMySQL implements RequestsRepository {
     @Override
     public Requests findOne(String id) {
         Requests requests = null;
+        myLogger.info("Buscando una solicitud con id " + id);
         try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlFindOne);) {
-            myLogger.info("Buscando una solicitud con id " + id);
             sentence.setString(1, id);
             ResultSet result = sentence.executeQuery();
             if (result.next()) {
@@ -51,9 +51,9 @@ public class RequestRepositoryMySQL implements RequestsRepository {
                 requests.setOwnerId(result.getString("ownerId"));
                 requests.setCompanyId(result.getString("companyId"));
             }
+            myLogger.info("Solicitud encontrada correctamente");
         } catch (SQLException e) {
             myLogger.error("Error al buscar una solicitud con id " + id + " " + e.getMessage());
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
         return requests;
@@ -62,9 +62,9 @@ public class RequestRepositoryMySQL implements RequestsRepository {
     @Override
     public List<Requests> findAll() {
         List<Requests> requests = new ArrayList<>();
+            myLogger.info("Buscando todas las solicitudes");
         try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlFindAll);) {
-            myLogger.info("Buscando todas las solicitudes");
             ResultSet result = sentence.executeQuery();
             while (result.next()) {
                 Requests request = new Requests(result.getString("id"));
@@ -74,9 +74,9 @@ public class RequestRepositoryMySQL implements RequestsRepository {
                 request.setCompanyId(result.getString("companyId"));
                 requests.add(request);
             }
+            myLogger.info("Solicitudes encontradas correctamente");
         } catch (SQLException e) {
             myLogger.error("Error al buscar todas las solicitudes " + e.getMessage());
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -85,14 +85,13 @@ public class RequestRepositoryMySQL implements RequestsRepository {
 
     @Override
     public void delete(String id) {
+            myLogger.info("Eliminando una solicitud con id " + id);
         try (Connection connection = new  DataBaseHelper().getConexion("mySQL");
              PreparedStatement sentence = connection.prepareStatement(sqlDelete);) {
-            myLogger.info("Eliminando una solicitud con id " + id);
             sentence.setString(1, id);
             sentence.executeUpdate();
+            myLogger.info("Solicitud eliminada correctamente");
         } catch (SQLException e) {
-            myLogger.error("Error al eliminar una solicitud con id " + id + " " + e.getMessage());
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }

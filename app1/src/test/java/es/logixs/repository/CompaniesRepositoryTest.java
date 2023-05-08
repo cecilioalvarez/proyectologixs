@@ -55,6 +55,7 @@ class CompaniesRepositoryTest {
     @Test
     void delete() {
         Companies company = new Companies("6A", "32234", "ADF2323SD", "PWC DTS", "adsf23");
+        companiesRepository.insert(company);
         companiesRepository.delete(company);
         Companies companyDeleted = companiesRepository.findOne("6A");
         assertNull(companyDeleted);
