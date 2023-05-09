@@ -2,6 +2,7 @@ package es.logixs.config;
 
 import javax.sql.DataSource;
 
+import jdk.jfr.Enabled;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -36,7 +37,7 @@ public class ConfiguradorSpring {
     }
 	@Bean
 	public JdbcTemplate template() {
-		
+
 		return new JdbcTemplate(dataSourceMySQL());
 	}
 

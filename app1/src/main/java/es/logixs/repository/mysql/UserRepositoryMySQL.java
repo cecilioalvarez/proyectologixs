@@ -1,26 +1,19 @@
 package es.logixs.repository.mysql;
 
-import es.logixs.config.DataBaseHelper;
+import es.logixs.config.ConfiguradorSpring;
 import es.logixs.domain.User;
 import es.logixs.repository.UserRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import es.logixs.repository.mysql.mappers.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+
 
 @Component
 public class UserRepositoryMySQL implements UserRepository{
 
-    @Autowired
-    private DataBaseHelper dataBaseHelper;
-    private static final Logger logger= LogManager.getLogger(UserRepositoryMySQL.class);
+    ConfiguradorSpring cS = new ConfiguradorSpring();
 
     private final static String sqlInsert = "insert into user (objectid,name,lastName,email) values (?,?,?,?)";
     private final static String sqlDelete = "delete from user where objectid=?";
@@ -29,74 +22,22 @@ public class UserRepositoryMySQL implements UserRepository{
 
     @Override
     public User insert(User user) {
-        logger.info("Trying to insert User with objectid: {}", user.getObjectid());
-        try (Connection connection = dataBaseHelper.getConexion("mySQL");
-             PreparedStatement query = connection.prepareStatement(sqlInsert)) {
-            query.setString(1, user.getObjectid());
-            query.setString(2, user.getName());
-            query.setString(3, user.getLastName());
-            query.setString(4, user.getEmail());
-            query.executeUpdate();
-            logger.info("User inserted successfully with objectid: {}", user.getObjectid());
-        } catch (SQLException e) {
-            logger.error("Error inserting user with objectid: {}", user.getObjectid(), e);
-            throw new RuntimeException(e);
-        }
+        cS.template().update(sqlInsert, user.getObjectid(),user.getName(), user.getLastName(),user.getEmail());
         return user;
     }
 
     @Override
     public void delete(User user) {
-        logger.info("Trying to delete User with objectid: {}", user.getObjectid());
-        try (Connection connection = dataBaseHelper.getConexion("mySQL");
-             PreparedStatement query = connection.prepareStatement(sqlDelete)) {
-            query.setString(1, user.getObjectid());
-            query.executeUpdate();
-            logger.info("User deleted successfully with objectid: {}", user.getObjectid());
-        } catch (SQLException e) {
-            logger.error("Error deleting user with objectid: {}", user.getObjectid(), e);
-            throw new RuntimeException(e);
-        }
+        cS.template().update(sqlDelete, user.getObjectid());
     }
 
     @Override
     public User findOne(String objectid) {
-        User user = null;
-        logger.info("Trying to find User with objectid: {}", objectid);
-        try (Connection conn =dataBaseHelper.getConexion("mySQL");
-             PreparedStatement stmt = conn.prepareStatement(sqlFindOne)) {
-            stmt.setString(1, objectid);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    user = new User(rs.getString("objectid"), rs.getString("name"), rs.getString("lastName"), rs.getString("email"));
-                    logger.info("User searched successfully with objectid: {}", user.getObjectid());
-                }
-            }
-        } catch (SQLException e) {
-            logger.error("Error finding user with objectid: {}", objectid, e);
-            throw new RuntimeException(e);
-        }
-        return user;
+        return  cS.template().queryForObject(sqlFindOne, User.class, objectid);
     }
 
     @Override
     public List<User> findAll() {
-        List<User> list = new ArrayList<>();
-        logger.info("Trying to find all Users");
-        try (Connection conn = dataBaseHelper.getConexion("mySQL");
-             PreparedStatement stmt = conn.prepareStatement(sqlFindAll);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-
-                list.add(new User(rs.getString("objectid"), rs.getString("name"), rs.getString("lastName"), rs.getString("email")));
-            }
-            logger.info("All Users found successfully");
-
-        } catch (SQLException e) {
-            logger.info("Error finding the users");
-            throw new RuntimeException(e);
-        }
-        return list;
+        return cS.template().query(sqlFindAll, new UserMapper());
     }
 }
