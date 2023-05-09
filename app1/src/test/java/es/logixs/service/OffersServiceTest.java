@@ -89,7 +89,7 @@ class OffersServiceTest {
 
     @Test
     public void findOneCounterOffer() {
-        int id = 2;
+        String id = "2";
 
         CounterOffers counterOffer = mock(CounterOffers.class);
 

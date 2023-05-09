@@ -1,155 +1,64 @@
 package es.logixs.repository.mysql;
 
-import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.CounterOffers;
 import es.logixs.repository.CounterOffersRepository;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import es.logixs.repository.mysql.mappers.CounterOffersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class CounterOffersRepositoryMySQL implements CounterOffersRepository {
-
-    public static final Logger log= LogManager.getLogger(CounterOffersRepositoryMySQL.class);
-
+    private final static String sqlInsert = "insert into counter_offers (object_id,name,vom,originalPrice,counterOfferPrice,quantity) values(?,?,?,?,?,?)";
+    private final static String sqlUpdate = "update counter_offers set name=? ,vom=? ,originalPrice=? ,counterOfferPrice=? ,quantity=? where object_id=?";
+    private final static String sqlDelete = "delete from products where object_id=?";
+    private final static String sqlFindAll = "select * from products;";
+    private final static String sqlFindOne = "select * from products  where object_id=?;";
     @Autowired
-    private DataBaseHelper dataBaseHelper;
+    private JdbcTemplate plantilla;
 
     @Override
     public CounterOffers insert(CounterOffers counterOffer) {
-        String query = "insert into counter_offers (id,name,vom,originalPrice,counterOfferPrice,quantity) values(?,?,?,?,?,?)";
-        log.info("INSERTING INTO COUNTER OFFERS");
-
-        try (
-            Connection connection = dataBaseHelper.getConexion("mySQL");
-            PreparedStatement statement = connection.prepareStatement(query)
-        ) {
-            statement.setInt(1, counterOffer.getId());
-            statement.setString(2, counterOffer.getName());
-            statement.setString(3, counterOffer.getVom());
-            statement.setDouble(4, counterOffer.getOriginalPrice());
-            statement.setDouble(5, counterOffer.getCounterOfferPrice());
-            statement.setDouble(6, counterOffer.getQuantity());
-            statement.executeUpdate();
-            log.info("INSERT SUCCESFUL");
-        } catch (SQLException e) {
-            log.error("ERROR INSERTING COUNTER OFFERS:", e);
-            throw new RuntimeException(e);
-        }
-
+        plantilla.update(
+            sqlInsert,
+            counterOffer.getObjectId(),
+            counterOffer.getName(),
+            counterOffer.getVom(),
+            counterOffer.getOriginalPrice(),
+            counterOffer.getCounterOfferPrice(),
+            counterOffer.getQuantity()
+        );
         return counterOffer;
     }
 
     @Override
     public CounterOffers update(CounterOffers counterOffer) {
-        String query = "update counter_offers set name=? ,vom=? ,originalPrice=? ,counterOfferPrice=? ,quantity=? where id=?";
-        log.info("UPDATING COUNTER OFFERS WITH ID: "+counterOffer.getId());
-
-        try (
-            Connection connection = dataBaseHelper.getConexion("mySQL");
-            PreparedStatement statement = connection.prepareStatement(query)
-        ) {
-            statement.setString(1, counterOffer.getName());
-            statement.setString(2, counterOffer.getVom());
-            statement.setDouble(3, counterOffer.getOriginalPrice());
-            statement.setDouble(4, counterOffer.getCounterOfferPrice());
-            statement.setDouble(5, counterOffer.getQuantity());
-            statement.setInt(6, counterOffer.getId());
-            statement.executeUpdate();
-            log.info("UPDATE SUCCESFUL");
-        } catch (SQLException e) {
-            log.error("ERROR UPDATING COUNTER OFFERS:", e);
-            throw new RuntimeException(e);
-        }
-
+        plantilla.update(
+            sqlUpdate,
+            counterOffer.getObjectId(),
+            counterOffer.getName(),
+            counterOffer.getVom(),
+            counterOffer.getOriginalPrice(),
+            counterOffer.getCounterOfferPrice(),
+            counterOffer.getQuantity()
+        );
         return counterOffer;
     }
 
     @Override
     public void delete(CounterOffers counterOffer) {
-        String query = "delete from counter_offers where id = ?";
-        log.info("DELETING COUNTER OFFERS WITH ID: "+counterOffer.getId());
-
-        try (
-            Connection connection = dataBaseHelper.getConexion("mySQL");
-            PreparedStatement statement = connection.prepareStatement(query)
-        ) {
-            statement.setInt(1, counterOffer.getId());
-            statement.executeUpdate();
-            log.info("DELETE SUCCESFUL");
-        } catch (SQLException e) {
-            log.error("ERROR DELETING COUNTER OFFER:", e);
-            throw new RuntimeException(e);
-        }
+        plantilla.update(sqlDelete, counterOffer.getObjectId());
     }
 
     @Override
-    public CounterOffers findOne(int id) {
-
-        CounterOffers counterOffer = null;
-        String sql = "select * from counter_offers where id = ?";
-        //log.info("SEARCHING COUNTER OFFER WITH ID: " + counterOffer.getId());
-        try (
-            Connection connection = dataBaseHelper.getConexion("mySQL");
-            PreparedStatement statement = connection.prepareStatement(sql)
-        ) {
-            statement.setInt(1, id);
-            ResultSet result = statement.executeQuery();
-            if (result.next()) {
-                counterOffer = new CounterOffers(
-                    result.getInt("id"),
-                    result.getString("name"),
-                    result.getString("vom"),
-                    result.getDouble("originalPrice"),
-                    result.getDouble("counterOfferPrice"),
-                    result.getDouble("quantity")
-                );
-            }
-        log.info("COUNTER OFFER FOUND");
-        } catch (SQLException e) {
-            log.error("ERROR SEARCHING COUNTER OFFER:", e);
-            throw new RuntimeException(e);
-        }
-
-        return counterOffer;
+    public CounterOffers findOne(String objectId) {
+        return plantilla.queryForObject(sqlFindOne, CounterOffers.class, objectId);
     }
 
     @Override
     public List<CounterOffers> findAll() {
-
-        List<CounterOffers> counterOffersList = new ArrayList<>();
-        String query = "select * from counter_offers";
-        log.info("FINDING ALL COUNTER OFFERS");
-        try (
-            Connection connection = dataBaseHelper.getConexion("mySQL");
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet result = statement.executeQuery()
-        ) {
-            while (result.next()) {
-                counterOffersList.add(new CounterOffers(
-                    result.getInt("id"),
-                    result.getString("name"),
-                    result.getString("vom"),
-                    result.getDouble("originalPrice"),
-                    result.getDouble("counterOfferPrice"),
-                    result.getDouble("quantity"))
-                );
-            }
-        log.info("FOUND COUNTER OFFERS");
-        } catch (Exception e) {
-            log.error("ERROR SEARCHING ALL COUNTER OFFERS:", e);
-            throw new RuntimeException(e);
-        }
-
-        return counterOffersList;
+        return plantilla.query(sqlFindAll, new CounterOffersMapper());
     }
 }

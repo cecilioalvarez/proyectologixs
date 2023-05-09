@@ -11,7 +11,7 @@ public interface CounterOffersRepository {
 
     void delete(CounterOffers counterOffer);
 
-    CounterOffers findOne(int id);
+    CounterOffers findOne(String objectId);
 
     List<CounterOffers> findAll();
 }
