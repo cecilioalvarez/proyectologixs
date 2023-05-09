@@ -1,11 +1,8 @@
 package es.logixs.config;
 
 import javax.sql.DataSource;
-
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +17,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 public class ConfiguradorSpring  {
 
-	private ApplicationContext contexto;
 	@Value("${url}")
 	String url;
 	@Value("${user}")
@@ -42,9 +38,9 @@ public class ConfiguradorSpring  {
     }
 	@Bean
 	public JdbcTemplate template() {
-		
+
 		return new JdbcTemplate(dataSourceMySQL());
 	}
-	
+
 
 }
