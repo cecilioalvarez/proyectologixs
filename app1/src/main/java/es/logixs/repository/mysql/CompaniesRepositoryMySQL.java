@@ -1,18 +1,12 @@
 package es.logixs.repository.mysql;
 
-import es.logixs.config.DataBaseHelper;
 import es.logixs.domain.Companies;
 import es.logixs.repository.CompaniesRepository;
+import es.logixs.repository.mysql.mappers.CompaniesMapper;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,100 +16,28 @@ public class CompaniesRepositoryMySQL implements CompaniesRepository {
     private final static String sqlFindAll = "select * from companies";
     private final static String sqlDelete = "delete from companies where objectid=?";
     private final static String sqlFindOne = "select * from companies where objectid=?";
-    private static final Logger loggingTool = LogManager.getLogger(CompaniesRepositoryMySQL.class.getName());
+  
     @Autowired
-    private DataBaseHelper dataBaseHelper;
+    private JdbcTemplate plantilla;
 
     @Override
-    public Companies insert(Companies company) {
-        loggingTool.info("Companies.insert() is called");
-        loggingTool.warn("The fields must be filled {}", company);
-
-        try (Connection conexion =dataBaseHelper.getConexion("mySQL");
-                PreparedStatement sentencia = conexion.prepareStatement(sqlInsert)) {
-            sentencia.setString(1, company.getObjectid());
-            sentencia.setString(2, company.getCode());
-            sentencia.setString(3, company.getLicenseId());
-            sentencia.setString(4, company.getName());
-            sentencia.setString(5, company.getTaxId());
-            sentencia.executeUpdate();
-
-            loggingTool.debug("Inserted company result: {},{},{},{},{}", company.getObjectid(), company.getCode(),
-                    company.getLicenseId(), company.getName(), company.getTaxId());
-        } catch (SQLException e) {
-
-            loggingTool.error("An error has occurred :", e);
-        }
+    public Companies insert(Companies company) {   
+        plantilla.update(sqlInsert, company.getObjectid(),company.getCode(), company.getLicenseId(),company.getName(), company.getTaxId());
         return company;
     }
-
     @Override
     public void delete(Companies company) {
-        loggingTool.info("Companies.delete() is called");
-        loggingTool.warn("Attempting to delete {}", company);
-
-        try (Connection conexion = dataBaseHelper.getConexion("mySQL");
-                PreparedStatement sentencia = conexion.prepareStatement(sqlDelete)) {
-            sentencia.setString(1, company.getObjectid());
-            sentencia.executeUpdate();
-            loggingTool.debug("Object company has an state of {}:", company);
-        } catch (SQLException e) {
-
-            loggingTool.error("An error has occurred :", e);
-
-        }
+        plantilla.update(sqlDelete, company.getObjectid());
     }
 
     @Override
     public List<Companies> findAll() {
-        loggingTool.info("Companies.findAll() is called");
-
-        List<Companies> lista = new ArrayList<>();
-        loggingTool.warn("The fields must not be empty {}", lista);
-
-        try (Connection conn = dataBaseHelper.getConexion("mySQL");
-                PreparedStatement stmt = conn.prepareStatement(sqlFindAll);
-                ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-
-                lista.add(new Companies(rs.getString("objectid"), rs.getString("code"), rs.getString("licenseId"),
-                        rs.getString("name"), rs.getString("taxId")));
-            }
-            loggingTool.debug("List size is : {} The elements are {}", lista.size(), lista);
-
-        } catch (SQLException e) {
-
-            loggingTool.error("An error has occurred :", e);
-        }
-        return lista;
+        return plantilla.query(sqlFindAll, new CompaniesMapper());
     }
-
+    
     @Override
-    public Companies findOne(String objectid) {
-
-        loggingTool.info("Companies.findOne() is called");
-        loggingTool.warn("Attempting to find company with identifier {}", objectid);
-
-        Companies company = null;
-
-        try (Connection conn =dataBaseHelper.getConexion("mySQL");
-                PreparedStatement stmt = conn.prepareStatement(sqlFindOne)) {
-            stmt.setString(1, objectid);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    company = new Companies(rs.getString("objectid"), rs.getString("code"), rs.getString("licenseId"),
-                            rs.getString("name"), rs.getString("taxId"));
-                    loggingTool.debug("Found company result: {},{},{},{},{}", company.getObjectid(), company.getCode(),
-                            company.getLicenseId(), company.getName(), company.getTaxId());
-                }
-            }
-
-        } catch (SQLException e) {
-
-            loggingTool.error("An error has occurred :", e);
-        }
-        return company;
+    public Companies findOne(String objectid) {    
+       return  plantilla.queryForObject(sqlFindOne, Companies.class, objectid);
     }
 
 }
