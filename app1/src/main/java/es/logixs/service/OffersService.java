@@ -44,7 +44,7 @@ public class OffersService {
         counterOffersRepository.delete(counterOffers);
     }
 
-    public CounterOffers findOneCounterOffer(int objectId){
+    public CounterOffers findOneCounterOffer(String objectId){
         return counterOffersRepository.findOne(objectId);
     }
 

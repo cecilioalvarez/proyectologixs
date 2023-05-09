@@ -31,7 +31,7 @@ public class CounterOffersRepositoryTest {
     @Test
     void should_insert() {
         CounterOffers counterOffers = new CounterOffers(
-            5,
+            "5",
             "name5",
             "vom5",
             2.0,
@@ -47,7 +47,7 @@ public class CounterOffersRepositoryTest {
     @Test
     void should_update() {
         CounterOffers counterOffers = new CounterOffers(
-            5,
+            "5",
             "name5",
             "vom5",
             2.0,
@@ -63,7 +63,7 @@ public class CounterOffersRepositoryTest {
     @Test
     void should_delete() {
         CounterOffers counterOffers = new CounterOffers(
-            5,
+            "5",
             "name5",
             "vom5",
             2.0,
@@ -72,14 +72,14 @@ public class CounterOffersRepositoryTest {
         );
 
         counterOffersRepository.delete(counterOffers);
-        CounterOffers counterOffersDeleted = counterOffersRepository.findOne(5);
+        CounterOffers counterOffersDeleted = counterOffersRepository.findOne("5");
 
         assertNull(counterOffersDeleted);
     }
 
     @Test
     void should_findOne() {
-        CounterOffers counterOffersFound = counterOffersRepository.findOne(4);
+        CounterOffers counterOffersFound = counterOffersRepository.findOne("4");
 
         assertEquals("name4", counterOffersFound.getName());
     }
