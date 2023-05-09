@@ -1,11 +1,9 @@
 package es.logixs.main;
 
 import es.logixs.config.ConfiguradorSpring;
-import es.logixs.domain.Companies;
 import es.logixs.domain.CounterOffers;
 import es.logixs.domain.Offer;
 import es.logixs.service.OffersService;
-import es.logixs.service.UsersCompanyService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class AppCounterOffers {
@@ -18,7 +16,7 @@ public class AppCounterOffers {
         for (CounterOffers counterOffers : servicio.findAllCounterOffer()) {
 
             System.out.println(counterOffers.getName());
-            System.out.println(counterOffers.getId());
+            System.out.println(counterOffers.getObjectId());
         }
 
         for (Offer offer : servicio.findAllOffers()) {
