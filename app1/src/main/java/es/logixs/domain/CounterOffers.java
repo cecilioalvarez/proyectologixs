@@ -3,7 +3,7 @@ package es.logixs.domain;
 
 
 public class CounterOffers {
-    private int id;
+    private String objectId;
     private String name;
     private String vom;
     private double originalPrice;
@@ -14,8 +14,8 @@ public class CounterOffers {
 
     }
 
-    public CounterOffers(int id, String name, String vom, double originalPrice, double counterOfferPrice, double quantity) {
-        this.id = id;
+    public CounterOffers(String objectId, String name, String vom, double originalPrice, double counterOfferPrice, double quantity) {
+        this.objectId = objectId;
         this.name = name;
         this.vom = vom;
         this.originalPrice = originalPrice;
@@ -23,12 +23,12 @@ public class CounterOffers {
         this.quantity = quantity;
     }
 
-    public int getId() {
-        return id;
+    public String getObjectId() {
+        return objectId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 
     public String getName() {
