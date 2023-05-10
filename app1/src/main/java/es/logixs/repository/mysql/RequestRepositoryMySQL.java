@@ -1,12 +1,16 @@
 package es.logixs.repository.mysql;
 
-import es.logixs.config.DataBaseHelper;
+import es.logixs.config.ConfiguradorSpring;
+import es.logixs.domain.Companies;
 import es.logixs.domain.Requests;
 import es.logixs.main.App;
 import es.logixs.repository.RequestsRepository;
+import es.logixs.repository.mysql.mappers.CompaniesMapper;
+import es.logixs.repository.mysql.mappers.RequestsMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -22,83 +26,26 @@ public class RequestRepositoryMySQL implements RequestsRepository {
     private static final Logger myLogger= LogManager.getLogger(App.class);
 
     @Autowired
-    private DataBaseHelper dataBaseHelper;
+    private ConfiguradorSpring cs;
 
     @Override
     public Requests insert(Requests requests) {
-            myLogger.info("Insertando una solicitud " + requests.toString());
-        try (Connection connection = dataBaseHelper.getConexion("mySQL");
-             PreparedStatement sentence = connection.prepareStatement(sqlInsert)) {
-            sentence.setString(1, requests.getCode());
-            sentence.setString(2, requests.getOfferId());
-            sentence.setString(3, requests.getOwnerId());
-            sentence.setString(4, requests.getCompanyId());
-            sentence.executeUpdate();
-            myLogger.info("Solicitud insertada correctamente");
-        } catch (SQLException e) {
-            myLogger.error("Error al insertar una solicitud " + e.getMessage());
-            throw new RuntimeException(e);
-        }
+        cs.template().update(sqlInsert, requests.getCode(), requests.getOfferId(), requests.getOwnerId(), requests.getCompanyId());
         return requests;
     }
 
     @Override
     public Requests findOne(String id) {
-        Requests requests = null;
-        myLogger.info("Buscando una solicitud con id " + id);
-        try (Connection connection = dataBaseHelper.getConexion("mySQL");
-             PreparedStatement sentence = connection.prepareStatement(sqlFindOne)) {
-            sentence.setString(1, id);
-            ResultSet result = sentence.executeQuery();
-            if (result.next()) {
-                requests = new Requests(result.getString("id"));
-                requests.setCode(result.getString("code"));
-                requests.setOfferId(result.getString("offerId"));
-                requests.setOwnerId(result.getString("ownerId"));
-                requests.setCompanyId(result.getString("companyId"));
-            }
-            myLogger.info("Solicitud encontrada correctamente");
-        } catch (SQLException e) {
-            myLogger.error("Error al buscar una solicitud con id " + id + " " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-        return requests;
+        return  cs.template().queryForObject(sqlFindOne, Requests.class, id);
     }
 
     @Override
     public List<Requests> findAll() {
-        List<Requests> requests = new ArrayList<>();
-            myLogger.info("Buscando todas las solicitudes");
-        try (Connection connection = dataBaseHelper.getConexion("mySQL");
-             PreparedStatement sentence = connection.prepareStatement(sqlFindAll)) {
-            ResultSet result = sentence.executeQuery();
-            while (result.next()) {
-                Requests request = new Requests(result.getString("id"));
-                request.setCode(result.getString("code"));
-                request.setOfferId(result.getString("offerId"));
-                request.setOwnerId(result.getString("ownerId"));
-                request.setCompanyId(result.getString("companyId"));
-                requests.add(request);
-            }
-            myLogger.info("Solicitudes encontradas correctamente");
-        } catch (SQLException e) {
-            myLogger.error("Error al buscar todas las solicitudes " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-
-        return requests;
+        return cs.template().query(sqlFindAll, new RequestsMapper());
     }
 
     @Override
     public void delete(String id) {
-            myLogger.info("Eliminando una solicitud con id " + id);
-        try (Connection connection = dataBaseHelper.getConexion("mySQL");
-             PreparedStatement sentence = connection.prepareStatement(sqlDelete)) {
-            sentence.setString(1, id);
-            sentence.executeUpdate();
-            myLogger.info("Solicitud eliminada correctamente");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        cs.template().update(sqlDelete, id);
     }
 }
