@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import jdk.jfr.Enabled;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +15,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 @Configuration
 @ComponentScan("es.logixs")
 @PropertySource("classpath:database.properties")
-public class ConfiguradorSpring {
+@EnableWebMvc
+public class ConfiguradorSpring  {
 
 	@Value("${url}")
 	String url;
